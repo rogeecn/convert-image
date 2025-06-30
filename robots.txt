@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# 优化爬虫抓取
+Crawl-delay: 1
+
+# 主要页面
+Allow: /index.html
+Allow: /manifest.json
+
+# 资源文件
+Allow: /styles/
+Allow: /scripts/
+Allow: /assets/
+
+# 不允许抓取的文件
+Disallow: /sw.js
+Disallow: /*?*
+
+# 站点地图
+Sitemap: https://yoursite.com/sitemap.xml
