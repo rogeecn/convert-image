@@ -14,7 +14,7 @@ class ImageConverterApp {
             style: {
                 fontSize: 24,
                 fontFamily: 'Arial',
-                color: '#ffffff'
+                color: '#ff8200'
             },
             image: null,
             scale: 0.2

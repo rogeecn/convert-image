@@ -205,9 +205,9 @@ class ImageProcessor {
             position = 'center',
             fontSize = 24,
             fontFamily = 'Arial',
-            color = '#ffffff',
+            color = '#ff8200',
             opacity = 0.8,
-            padding = 20
+            padding = 0
         } = options;
 
         this.ctx.save();
