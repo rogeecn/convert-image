@@ -75,6 +75,15 @@
         gap: 0.5rem;
     }
 
+    .header-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .language-switcher {
+        order: -1;
+    }
+
     .logo {
         font-size: 1.25rem;
     }
@@ -148,6 +157,14 @@
 
     .container {
         padding: 0 10px;
+    }
+
+    .header-info {
+        font-size: 0.8rem;
+    }
+
+    .language-switcher {
+        font-size: 0.8rem;
     }
 
     .upload-area {
