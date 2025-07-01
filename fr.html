@@ -37,16 +37,6 @@
         content="Outil de traitement d'image en ligne gratuit, prend en charge plusieurs conversions de format et traitement par lot, aucune installation de logiciel requise.">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- Support PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Outil de Traitement d'Image">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
-
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
@@ -465,41 +455,9 @@
         </div>
     </div>
 
-    <!-- Invite d'installation PWA -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>Installer comme application</h4>
-                <p>Installez l'outil de traitement d'image sur votre appareil pour une expérience d'utilisation hors
-                    ligne</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">Installer</button>
-                <button class="btn btn-secondary" id="dismissBtn">Pas maintenant</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Invite de mise à jour PWA -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>Nouvelle version disponible</h4>
-                <p>De nouvelles fonctionnalités sont disponibles, mettre à jour maintenant ?</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">Mettre à jour</button>
-                <button class="btn btn-secondary" id="laterBtn">Plus tard</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Charger la bibliothèque JSZip -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- Initialisation PWA et Service Worker -->
     <script>
         // Configuration de texte français
         window.TEXT_CONFIG = {
@@ -548,10 +506,6 @@
             NETWORK_RESTORED: 'Connexion réseau restaurée',
             NETWORK_DISCONNECTED: 'Connexion réseau perdue',
             LAYOUT_UPDATED: 'Mise en page mise à jour',
-            PWA_INSTALL_SUCCESS: 'Installation PWA réussie',
-            APP_INSTALL_SUCCESS: 'Application installée avec succès ! Vous pouvez maintenant y accéder directement depuis l\'écran d\'accueil.',
-            USER_ACCEPTED_INSTALL: 'L\'utilisateur a accepté l\'invite d\'installation',
-            USER_REJECTED_INSTALL: 'L\'utilisateur a rejeté l\'invite d\'installation',
             GLOBAL_ERROR: 'Erreur globale',
             APP_ERROR_REFRESH: 'Erreur de l\'application, veuillez actualiser la page et réessayer',
             ALL_MANAGERS_INITIALIZED: 'Tous les gestionnaires initialisés',
@@ -664,86 +618,6 @@
             });
         }
 
-        // Invite d'installation PWA
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000);
-            }
-        });
-
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('L\'utilisateur a accepté l\'installation');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('Installation PWA réussie');
-        });
     </script>
 
     <!-- Charger les scripts du projet -->

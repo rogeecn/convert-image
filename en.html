@@ -36,13 +36,7 @@
         content="Free online image processing tool, supports multiple format conversions and batch processing, no software installation required.">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- PWA Support -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Image Processing Tool">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
 
@@ -496,40 +490,10 @@
         </div>
     </div>
 
-    <!-- PWA Install Prompt -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>Install as App</h4>
-                <p>Install the Image Processing Tool to your device for offline use experience</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">Install</button>
-                <button class="btn btn-secondary" id="dismissBtn">Not Now</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PWA Update Prompt -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>New Version Available</h4>
-                <p>New features are available, update now?</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">Update</button>
-                <button class="btn btn-secondary" id="laterBtn">Later</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Load JSZip Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- PWA and Service Worker Initialization -->
+    <!-- Application Configuration and Initialization -->
     <script>
         // English Text Configuration - Unified management of all text used in JavaScript
         window.TEXT_CONFIG = {
@@ -597,12 +561,6 @@
             NETWORK_RESTORED: 'Network connection restored',
             NETWORK_DISCONNECTED: 'Network connection lost',
             LAYOUT_UPDATED: 'Layout updated',
-
-            // PWA related
-            PWA_INSTALL_SUCCESS: 'PWA installation successful',
-            APP_INSTALL_SUCCESS: 'App installed successfully! Now you can access it directly from the home screen.',
-            USER_ACCEPTED_INSTALL: 'User accepted installation prompt',
-            USER_REJECTED_INSTALL: 'User rejected installation prompt',
 
             // Error handling
             GLOBAL_ERROR: 'Global error',
@@ -716,116 +674,6 @@
                 animation: slideInRight 0.3s ease;
             `
         };
-
-        // Service Worker registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW registration successful:', registration);
-
-                        // Check for updates
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    showUpdatePrompt();
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.log('SW registration failed:', error);
-                    });
-            });
-        }
-
-        // PWA installation prompt
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000); // Show install prompt after 3 seconds
-            }
-        });
-
-        // Show install prompt
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        // Show update prompt
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        // Install button events
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted install');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            // Update button events
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        // Listen for installation complete event
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('PWA installation successful');
-            // You can add installation success feedback here
-        });
     </script>
 
     <!-- Load project scripts -->

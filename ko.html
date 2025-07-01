@@ -31,13 +31,6 @@
     <meta property="twitter:description" content="무료 온라인 이미지 처리 도구, 다양한 포맷 변환과 배치 처리 지원, 소프트웨어 설치 불필요.">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- PWA 지원 -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="이미지 처리 도구">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
 
@@ -481,40 +474,7 @@
         </div>
     </div>
 
-    <!-- PWA 설치 안내 -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>앱으로 설치</h4>
-                <p>이미지 처리 도구를 기기에 설치하여 오프라인 사용 경험을 즐기세요</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">설치</button>
-                <button class="btn btn-secondary" id="dismissBtn">나중에</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PWA 업데이트 안내 -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>새 버전 발견</h4>
-                <p>새로운 기능을 사용할 수 있습니다. 지금 업데이트하시겠습니까?</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">업데이트</button>
-                <button class="btn btn-secondary" id="laterBtn">나중에</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JSZip 라이브러리 로드 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <!-- PWA 및 Service Worker 초기화 -->
+    <!-- Application Configuration and Initialization -->
     <script>
         // 한국어 텍스트 설정 - JavaScript에서 사용되는 모든 한국어 텍스트 통합 관리
         window.TEXT_CONFIG = {
@@ -583,11 +543,6 @@
             NETWORK_DISCONNECTED: '네트워크 연결이 끊어졌습니다',
             LAYOUT_UPDATED: '레이아웃이 업데이트되었습니다',
 
-            // PWA 관련
-            PWA_INSTALL_SUCCESS: 'PWA 설치 성공',
-            APP_INSTALL_SUCCESS: '앱이 성공적으로 설치되었습니다! 이제 홈 화면에서 직접 접근할 수 있습니다.',
-            USER_ACCEPTED_INSTALL: '사용자가 설치 안내를 수락했습니다',
-            USER_REJECTED_INSTALL: '사용자가 설치 안내를 거부했습니다',
 
             // 오류 처리
             GLOBAL_ERROR: '전역 오류',
@@ -724,93 +679,6 @@
                     });
             });
         }
-
-        // PWA 설치 안내
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000); // 3초 후 설치 안내 표시
-            }
-        });
-
-        // 설치 안내 표시
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        // 업데이트 안내 표시
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        // 설치 버튼 이벤트
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('사용자가 설치를 수락했습니다');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            // 업데이트 버튼 이벤트
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        // 설치 완료 이벤트 수신
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('PWA 설치 성공');
-            // 여기에 설치 성공 피드백을 추가할 수 있습니다
-        });
     </script>
 
     <!-- 프로젝트 스크립트 로드 -->

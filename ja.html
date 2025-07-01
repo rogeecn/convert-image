@@ -30,13 +30,6 @@
         content="無料のオンライン画像処理ツール、JPEG、PNG、WEBP、BMP フォーマット変換、バッチテキスト透かし、画像透かし、画像回転・反転をサポート。ソフトウェアのインストール不要、ブラウザで直接使用、オフライン操作をサポート。">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- PWAサポート -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="画像処理ツール">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
 
@@ -353,40 +346,7 @@
         </div>
     </div>
 
-    <!-- PWAインストールプロンプト -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>アプリとしてインストール</h4>
-                <p>画像処理ツールをデバイスにインストールして、オフライン使用体験をお楽しみください</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">インストール</button>
-                <button class="btn btn-secondary" id="dismissBtn">今はしない</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PWA更新プロンプト -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>新しいバージョンが利用可能</h4>
-                <p>新機能が利用可能です。今すぐ更新しますか？</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">更新</button>
-                <button class="btn btn-secondary" id="laterBtn">後で</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JSZipライブラリをロード -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <!-- PWAとService Worker初期化 -->
+    <!-- Application Configuration and Initialization -->
     <script>
         // 日本語テキスト設定
         window.TEXT_CONFIG = {
@@ -435,10 +395,6 @@
             NETWORK_RESTORED: 'ネットワーク接続が復旧しました',
             NETWORK_DISCONNECTED: 'ネットワーク接続が失われました',
             LAYOUT_UPDATED: 'レイアウトが更新されました',
-            PWA_INSTALL_SUCCESS: 'PWAインストール成功',
-            APP_INSTALL_SUCCESS: 'アプリが正常にインストールされました！ホーム画面から直接アクセスできます。',
-            USER_ACCEPTED_INSTALL: 'ユーザーがインストールプロンプトを受け入れました',
-            USER_REJECTED_INSTALL: 'ユーザーがインストールプロンプトを拒否しました',
             GLOBAL_ERROR: 'グローバルエラー',
             APP_ERROR_REFRESH: 'アプリエラーが発生しました。ページを更新して再試行してください',
             ALL_MANAGERS_INITIALIZED: 'すべてのマネージャーが初期化されました',
@@ -483,86 +439,6 @@
             });
         }
 
-        // PWAインストールプロンプト
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000);
-            }
-        });
-
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('ユーザーがインストールを承認しました');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('PWAインストール成功');
-        });
     </script>
 
     <!-- プロジェクトスクリプトをロード -->

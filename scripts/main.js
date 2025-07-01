@@ -1082,87 +1082,6 @@ class NetworkManager {
     }
 }
 
-/**
- * PWA 安装管理
- * 处理PWA安装提示和相关功能
- */
-class PWAManager {
-    constructor() {
-        this.deferredPrompt = null;
-        this.installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-        this.init();
-    }
-
-    init() {
-        this.setupInstallPrompt();
-        this.setupAppInstalledEvent();
-    }
-
-    setupInstallPrompt() {
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            this.deferredPrompt = e;
-
-            if (!this.installPromptShown) {
-                // 延迟显示安装提示，给用户时间体验应用
-                setTimeout(() => {
-                    this.showInstallPrompt();
-                }, 30000); // 30秒后显示
-            }
-        });
-    }
-
-    setupAppInstalledEvent() {
-        window.addEventListener('appinstalled', (evt) => {
-            console.log(window.TEXT_CONFIG.PWA_INSTALL_SUCCESS);
-            this.hideInstallPrompt();
-            this.showInstallSuccessMessage();
-        });
-    }
-
-    showInstallPrompt() {
-        const installPrompt = document.getElementById('installPrompt');
-        if (installPrompt && this.deferredPrompt) {
-            installPrompt.style.display = 'flex';
-        }
-    }
-
-    hideInstallPrompt() {
-        const installPrompt = document.getElementById('installPrompt');
-        if (installPrompt) {
-            installPrompt.style.display = 'none';
-        }
-        localStorage.setItem('installPromptShown', 'true');
-        this.installPromptShown = true;
-    }
-
-    showInstallSuccessMessage() {
-        // 可以显示安装成功的提示消息
-        if (window.app && window.app.showMessage) {
-            window.app.showMessage(window.TEXT_CONFIG.APP_INSTALL_SUCCESS, 'success');
-        }
-    }
-
-    async promptInstall() {
-        if (this.deferredPrompt) {
-            this.deferredPrompt.prompt();
-            const { outcome } = await this.deferredPrompt.userChoice;
-
-            if (outcome === 'accepted') {
-                console.log(window.TEXT_CONFIG.USER_ACCEPTED_INSTALL);
-            } else {
-                console.log(window.TEXT_CONFIG.USER_REJECTED_INSTALL);
-            }
-
-            this.deferredPrompt = null;
-        }
-        this.hideInstallPrompt();
-    }
-
-    dismissInstall() {
-        this.hideInstallPrompt();
-    }
-}
 
 /**
  * 应用性能监控
@@ -1209,9 +1128,6 @@ class PerformanceMonitor {
 window.addEventListener('DOMContentLoaded', () => {
     // 初始化网络管理器
     window.networkManager = new NetworkManager();
-
-    // 初始化PWA管理器
-    window.pwaManager = new PWAManager();
 
     // 初始化性能监控
     window.performanceMonitor = new PerformanceMonitor();

@@ -37,13 +37,6 @@
         content="Kostenloses Online-Bildbearbeitungs-Tool, unterstützt mehrere Format-Konvertierungen und Stapelverarbeitung, keine Software-Installation erforderlich.">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- PWA Unterstützung -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Bildbearbeitungs-Tool">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
 
@@ -465,40 +458,14 @@
         </div>
     </div>
 
-    <!-- PWA-Installationsaufforderung -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>Als App installieren</h4>
-                <p>Installieren Sie das Bildbearbeitungs-Tool auf Ihrem Gerät für Offline-Nutzung</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">Installieren</button>
-                <button class="btn btn-secondary" id="dismissBtn">Nicht jetzt</button>
-            </div>
-        </div>
     </div>
 
-    <!-- PWA-Update-Aufforderung -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>Neue Version verfügbar</h4>
-                <p>Neue Funktionen sind verfügbar, jetzt aktualisieren?</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">Aktualisieren</button>
-                <button class="btn btn-secondary" id="laterBtn">Später</button>
-            </div>
-        </div>
     </div>
 
     <!-- JSZip-Bibliothek laden -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- PWA und Service Worker Initialisierung -->
+    <!-- Application Configuration and Initialization -->
     <script>
         // Deutsche Textkonfiguration
         window.TEXT_CONFIG = {
@@ -547,10 +514,8 @@
             NETWORK_RESTORED: 'Netzwerkverbindung wiederhergestellt',
             NETWORK_DISCONNECTED: 'Netzwerkverbindung unterbrochen',
             LAYOUT_UPDATED: 'Layout aktualisiert',
-            PWA_INSTALL_SUCCESS: 'PWA-Installation erfolgreich',
-            APP_INSTALL_SUCCESS: 'App erfolgreich installiert! Sie können sie jetzt direkt vom Startbildschirm aus aufrufen.',
-            USER_ACCEPTED_INSTALL: 'Benutzer hat Installationsaufforderung akzeptiert',
-            USER_REJECTED_INSTALL: 'Benutzer hat Installationsaufforderung abgelehnt',
+
+            // Fehlerbehandlung
             GLOBAL_ERROR: 'Globaler Fehler',
             APP_ERROR_REFRESH: 'App-Fehler aufgetreten, bitte Seite aktualisieren und erneut versuchen',
             ALL_MANAGERS_INITIALIZED: 'Alle Manager initialisiert',
@@ -640,108 +605,6 @@
                 animation: slideInRight 0.3s ease;
             `
         };
-
-        // Service Worker-Registrierung
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW-Registrierung erfolgreich:', registration);
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    showUpdatePrompt();
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.log('SW-Registrierung fehlgeschlagen:', error);
-                    });
-            });
-        }
-
-        // PWA-Installationsaufforderung
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000);
-            }
-        });
-
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('Benutzer hat Installation akzeptiert');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('PWA-Installation erfolgreich');
-        });
     </script>
 
     <!-- Projekt-Skripte laden -->

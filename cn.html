@@ -31,13 +31,7 @@
     <meta property="twitter:description" content="免费在线图片处理工具，支持多种格式转换和批量处理，无需安装软件。">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- PWA 支持 -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="图片处理工具">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
 
@@ -481,40 +475,10 @@
         </div>
     </div>
 
-    <!-- PWA 安装提示 -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>安装为APP</h4>
-                <p>将图片处理工具安装到设备，享受离线使用体验</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">安装</button>
-                <button class="btn btn-secondary" id="dismissBtn">暂不</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PWA 更新提示 -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>发现新版本</h4>
-                <p>有新功能可用，是否立即更新？</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">更新</button>
-                <button class="btn btn-secondary" id="laterBtn">稍后</button>
-            </div>
-        </div>
-    </div>
-
     <!-- 加载 JSZip 库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- PWA 和 Service Worker 初始化 -->
+    <!-- 应用配置和初始化 -->
     <script>
         // 中文字符串配置 - 统一管理所有 JavaScript 中使用的中文文本
         window.TEXT_CONFIG = {
@@ -582,12 +546,6 @@
             NETWORK_RESTORED: '网络连接已恢复',
             NETWORK_DISCONNECTED: '网络连接已断开',
             LAYOUT_UPDATED: '布局已更新',
-
-            // PWA 相关
-            PWA_INSTALL_SUCCESS: 'PWA 安装成功',
-            APP_INSTALL_SUCCESS: '应用安装成功！现在可以从主屏幕直接访问。',
-            USER_ACCEPTED_INSTALL: '用户接受了安装提示',
-            USER_REJECTED_INSTALL: '用户拒绝了安装提示',
 
             // 错误处理
             GLOBAL_ERROR: '全局错误',
@@ -701,29 +659,6 @@
                 animation: slideInRight 0.3s ease;
             `
         };
-
-        // Service Worker 注册
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW 注册成功:', registration);
-
-                        // 检查更新
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    showUpdatePrompt();
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.log('SW 注册失败:', error);
-                    });
-            });
-        }
     </script>
 
     <!-- 加载项目脚本 -->

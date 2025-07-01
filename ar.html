@@ -37,16 +37,6 @@
         content="أداة معالجة الصور المجانية عبر الإنترنت، تحويل تنسيقات متعددة ومعالجة مجمعة، لا حاجة لتثبيت البرامج.">
     <meta property="twitter:image" content="https://convert-image-online.ipao.vip/assets/icons/icon-512x512.png">
 
-    <!-- دعم PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="أداة معالجة الصور">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
-
     <!-- أوراق الأنماط -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
@@ -492,40 +482,9 @@
         </div>
     </div>
 
-    <!-- تلميح تثبيت PWA -->
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-content">
-            <div class="install-icon">📱</div>
-            <div class="install-text">
-                <h4>تثبيت كتطبيق</h4>
-                <p>ثبت أداة معالجة الصور على جهازك واستمتع بتجربة الاستخدام دون اتصال</p>
-            </div>
-            <div class="install-actions">
-                <button class="btn btn-primary" id="installBtn">تثبيت</button>
-                <button class="btn btn-secondary" id="dismissBtn">ليس الآن</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- تلميح تحديث PWA -->
-    <div class="update-prompt" id="updatePrompt">
-        <div class="update-content">
-            <div class="update-icon">🔄</div>
-            <div class="update-text">
-                <h4>تم اكتشاف إصدار جديد</h4>
-                <p>ميزات جديدة متاحة، هل تريد التحديث الآن؟</p>
-            </div>
-            <div class="update-actions">
-                <button class="btn btn-primary" id="updateBtn">تحديث</button>
-                <button class="btn btn-secondary" id="laterBtn">لاحقًا</button>
-            </div>
-        </div>
-    </div>
-
     <!-- تحميل مكتبة JSZip -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    <!-- تهيئة PWA و Service Worker -->
     <script>
         // تكوين النصوص العربية - إدارة موحدة لجميع النصوص العربية المستخدمة في JavaScript
         window.TEXT_CONFIG = {
@@ -593,12 +552,6 @@
             NETWORK_RESTORED: 'تم استعادة اتصال الشبكة',
             NETWORK_DISCONNECTED: 'انقطع اتصال الشبكة',
             LAYOUT_UPDATED: 'تم تحديث التخطيط',
-
-            // PWA
-            PWA_INSTALL_SUCCESS: 'تم تثبيت PWA بنجاح',
-            APP_INSTALL_SUCCESS: 'تم تثبيت التطبيق بنجاح! يمكنك الآن الوصول إليه مباشرة من الشاشة الرئيسية.',
-            USER_ACCEPTED_INSTALL: 'قبل المستخدم تلميح التثبيت',
-            USER_REJECTED_INSTALL: 'رفض المستخدم تلميح التثبيت',
 
             // معالجة الأخطاء
             GLOBAL_ERROR: 'خطأ عام',
@@ -708,93 +661,6 @@
                     });
             });
         }
-
-        // تلميح تثبيت PWA
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000); // عرض تلميح التثبيت بعد 3 ثوان
-            }
-        });
-
-        // عرض تلميح التثبيت
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        // عرض تلميح التحديث
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        // أحداث زر التثبيت
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('قبل المستخدم التثبيت');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            // أحداث زر التحديث
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        // الاستماع لحدث اكتمال التثبيت
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('تم تثبيت PWA بنجاح');
-            // يمكن إضافة ملاحظات نجاح التثبيت هنا
-        });
     </script>
 
     <!-- تحميل سكريبتات المشروع -->
