@@ -16,6 +16,27 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://yoursite.com/ar/">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/ar/">
+    <meta property="og:title"
+        content="أداة تحويل تنسيق الصور المجانية عبر الإنترنت - تحويل تنسيق الصور، إضافة العلامة المائية">
+    <meta property="og:description"
+        content="أداة معالجة الصور المجانية عبر الإنترنت، تحويل تنسيقات متعددة ومعالجة مجمعة، لا حاجة لتثبيت البرامج.">
+    <meta property="og:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="ar_AR">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yoursite.com/ar/">
+    <meta property="twitter:title"
+        content="أداة تحويل تنسيق الصور المجانية عبر الإنترنت - تحويل تنسيق الصور، إضافة العلامة المائية">
+    <meta property="twitter:description"
+        content="أداة معالجة الصور المجانية عبر الإنترنت، تحويل تنسيقات متعددة ومعالجة مجمعة، لا حاجة لتثبيت البرامج.">
+    <meta property="twitter:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
+
     <!-- دعم PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007bff">
@@ -29,6 +50,43 @@
     <!-- أوراق الأنماط -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
+
+    <!-- البيانات المنظمة -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "أداة معالجة الصور",
+        "description": "أداة معالجة الصور المجانية عبر الإنترنت، تحويل تنسيقات JPEG، PNG، WEBP، BMP، العلامات المائية النصية المجمعة، العلامات المائية للصور، دوران وانعكاس الصور. لا حاجة لتثبيت البرامج، استخدام مباشر في المتصفح، دعم العمل دون اتصال.",
+        "url": "https://yoursite.com/ar/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any",
+        "permissions": "browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "تحويل تنسيق الصور",
+            "معالجة الصور المجمعة",
+            "إضافة العلامة المائية النصية",
+            "إضافة العلامة المائية للصور",
+            "دوران وانعكاس الصور",
+            "الاستخدام دون اتصال",
+            "الاستخدام المجاني"
+        ],
+        "screenshot": "https://yoursite.com/assets/screenshots/desktop.png",
+        "softwareVersion": "1.0.0",
+        "author": {
+            "@type": "Organization",
+            "name": "فريق أداة معالجة الصور"
+        },
+        "browserRequirements": "متصفح حديث يدعم HTML5 Canvas",
+        "memoryRequirements": "512MB",
+        "processorRequirements": "Any"
+    }
+    </script>
 </head>
 
 <body>
@@ -52,233 +110,265 @@
                     <span class="lang-separator">|</span>
                     <span class="lang-current">العربية</span>
                 </div>
-                <div class="status-info">مجاني | معالجة في المتصفح | حماية خصوصية البيانات</div>
+                <span id="imageCount">0 صورة</span>
             </div>
         </div>
     </header>
-
-    <!-- الحاوية الرئيسية -->
     <div class="container">
         <div class="header-description">
             تدمج هذه الأداة تحويل تنسيق الصور والمعالجة المجمعة وإضافة العلامات المائية عبر الإنترنت وغيرها من الوظائف
             العملية. لا حاجة لتحميل وتثبيت أي برنامج، استخدمها مباشرة في المتصفح، مما يجعل معالجة الصور بسيطة وسريعة.
             سواء كنت مصممًا أو مصورًا أو مستخدمًا عاديًا، يمكنك العثور على الأدوات التي تحتاجها هنا.
         </div>
-        <!-- منطقة المعالجة الرئيسية -->
-        <main class="main-content">
+    </div>
+
+    <main class="main">
+        <div class="container">
             <!-- منطقة الرفع -->
-            <section class="upload-area">
-                <div class="upload-box" id="uploadBox">
-                    <div class="upload-icon">📁</div>
-                    <p class="upload-text">اسحب الملفات هنا أو اضغط للاختيار</p>
-                    <p class="upload-hint">يدعم اختيار ملفات متعددة، الحد الأقصى 100 ميجابايت</p>
-                    <input type="file" id="fileInput" multiple accept="image/*" class="file-input">
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <h3>اسحب الصور إلى هنا أو انقر للاختيار</h3>
+                        <p>يدعم صيغ JPG، PNG، GIF، WEBP، BMP</p>
+                        <button class="btn btn-primary" id="selectFilesBtn">اختيار الصور</button>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
                 </div>
             </section>
 
-            <!-- خيارات المعالجة -->
-            <section class="processing-options">
-                <div class="option-group">
-                    <h3>اختر عملية المعالجة</h3>
-                    <div class="option-tabs">
-                        <button class="tab-btn active" data-tab="format">تحويل التنسيق</button>
-                        <button class="tab-btn" data-tab="watermark">العلامة المائية</button>
-                        <button class="tab-btn" data-tab="transform">التحويل</button>
-                    </div>
+            <!-- شريط الأدوات -->
+            <section class="toolbar" id="toolbar" style="display: none;">
+                <div class="toolbar-left">
+                    <button class="btn btn-secondary" id="selectAllBtn">تحديد الكل</button>
+                    <button class="btn btn-danger" id="deleteBtn">حذف</button>
+                    <span class="separator">|</span>
+                    <button class="btn btn-secondary" id="rotateLeftBtn">↶ دوران يسار</button>
+                    <button class="btn btn-secondary" id="rotateRightBtn">↷ دوران يمين</button>
+                    <button class="btn btn-secondary" id="flipHBtn">⇄ انعكاس أفقي</button>
+                    <button class="btn btn-secondary" id="flipVBtn">⇅ انعكاس عمودي</button>
+                    <button class="btn btn-secondary" id="resetBtn">↺ إعادة تعيين</button>
                 </div>
-
-                <!-- خيارات تحويل التنسيق -->
-                <div class="tab-content active" data-tab="format">
-                    <div class="format-options">
-                        <h4>تنسيق الإخراج</h4>
-                        <div class="format-buttons">
-                            <button class="format-btn" data-format="jpeg">JPEG</button>
-                            <button class="format-btn" data-format="png">PNG</button>
-                            <button class="format-btn" data-format="webp">WEBP</button>
-                            <button class="format-btn" data-format="bmp">BMP</button>
-                        </div>
-
-                        <div class="quality-control">
-                            <label for="quality">جودة الصورة: <span id="qualityValue">80</span>%</label>
-                            <input type="range" id="quality" min="10" max="100" value="80">
-                            <small>كلما زادت الجودة، زاد حجم الملف</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- خيارات العلامة المائية -->
-                <div class="tab-content" data-tab="watermark">
-                    <div class="watermark-options">
-                        <div class="watermark-type">
-                            <h4>نوع العلامة المائية</h4>
-                            <div class="type-buttons">
-                                <button class="type-btn active" data-type="text">علامة مائية نصية</button>
-                                <button class="type-btn" data-type="image">علامة مائية للصورة</button>
-                            </div>
-                        </div>
-
-                        <!-- العلامة المائية النصية -->
-                        <div class="watermark-text active">
-                            <div class="input-group">
-                                <label for="watermarkText">نص العلامة المائية</label>
-                                <input type="text" id="watermarkText" placeholder="أدخل نص العلامة المائية">
-                            </div>
-
-                            <div class="style-controls">
-                                <div class="control-row">
-                                    <div class="control-group">
-                                        <label for="fontSize">حجم الخط</label>
-                                        <input type="range" id="fontSize" min="12" max="72" value="24">
-                                        <span id="fontSizeValue">24px</span>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="fontColor">لون الخط</label>
-                                        <input type="color" id="fontColor" value="#ffffff">
-                                    </div>
-                                </div>
-
-                                <div class="control-row">
-                                    <div class="control-group">
-                                        <label for="opacity">الشفافية</label>
-                                        <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.5">
-                                        <span id="opacityValue">50%</span>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="position">الموقع</label>
-                                        <select id="position">
-                                            <option value="center">الوسط</option>
-                                            <option value="top-left">أعلى اليسار</option>
-                                            <option value="top-right">أعلى اليمين</option>
-                                            <option value="bottom-left">أسفل اليسار</option>
-                                            <option value="bottom-right">أسفل اليمين</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- علامة مائية للصورة -->
-                        <div class="watermark-image">
-                            <div class="input-group">
-                                <label for="watermarkFile">صورة العلامة المائية</label>
-                                <input type="file" id="watermarkFile" accept="image/*">
-                            </div>
-                            <div class="control-row">
-                                <div class="control-group">
-                                    <label for="watermarkOpacity">الشفافية</label>
-                                    <input type="range" id="watermarkOpacity" min="0.1" max="1" step="0.1" value="0.5">
-                                    <span id="watermarkOpacityValue">50%</span>
-                                </div>
-                                <div class="control-group">
-                                    <label for="watermarkPosition">الموقع</label>
-                                    <select id="watermarkPosition">
-                                        <option value="center">الوسط</option>
-                                        <option value="top-left">أعلى اليسار</option>
-                                        <option value="top-right">أعلى اليمين</option>
-                                        <option value="bottom-left">أسفل اليسار</option>
-                                        <option value="bottom-right">أسفل اليمين</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- خيارات التحويل -->
-                <div class="tab-content" data-tab="transform">
-                    <div class="transform-options">
-                        <h4>تحويل الصورة</h4>
-                        <div class="transform-buttons">
-                            <button class="transform-btn" data-transform="rotate-90">دوران 90°</button>
-                            <button class="transform-btn" data-transform="rotate-180">دوران 180°</button>
-                            <button class="transform-btn" data-transform="rotate-270">دوران 270°</button>
-                            <button class="transform-btn" data-transform="flip-horizontal">انعكاس أفقي</button>
-                            <button class="transform-btn" data-transform="flip-vertical">انعكاس عمودي</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- أزرار المعالجة -->
-                <div class="action-buttons">
-                    <button id="processBtn" class="process-btn" disabled>معالجة الصور</button>
-                    <button id="downloadAllBtn" class="download-all-btn" disabled>تحميل الكل</button>
+                <div class="toolbar-right">
+                    <button class="btn btn-success" id="downloadBtn">📥 حفظ وتحميل</button>
                 </div>
             </section>
 
-            <!-- شريط التقدم -->
-            <section class="progress-section" style="display: none;">
-                <h3>تقدم المعالجة</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
+            <!-- منطقة المحتوى الرئيسي -->
+            <section class="content-area">
+                <!-- شبكة الصور -->
+                <div class="images-container">
+                    <div class="images-grid" id="imagesGrid">
+                        <!-- عناصر الصور المولدة ديناميكيًا -->
+                    </div>
                 </div>
-                <div class="progress-text">0 / 0 مكتمل</div>
-            </section>
 
-            <!-- معاينة النتائج -->
-            <section class="preview-section" style="display: none;">
-                <h3>نتائج المعالجة</h3>
-                <div class="preview-grid" id="previewGrid">
-                    <!-- عناصر المعاينة المولدة ديناميكيًا -->
-                </div>
-            </section>
-        </main>
+                <!-- لوحة العمليات الجانبية -->
+                <aside class="side-panel" id="sidePanel">
+                    <div class="panel-header">
+                        <h3>لوحة التحكم</h3>
+                        <span class="selected-count" id="selectedCount">لم يتم اختيار صور</span>
+                    </div>
 
-        <!-- دليل معرفة تنسيقات الصور -->
-        <section class="format-guide">
+                    <!-- تحويل التنسيق -->
+                    <div class="panel-section">
+                        <h4>🔄 تحويل التنسيق</h4>
+                        <div class="format-controls">
+                            <label>التنسيق المستهدف:</label>
+                            <select id="targetFormat">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WEBP</option>
+                                <option value="bmp">BMP</option>
+                            </select>
+
+                            <div class="quality-control" id="qualityControl">
+                                <label>الجودة: <span id="qualityValue">90</span>%</label>
+                                <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="convertBtn">تحويل التنسيق</button>
+                        </div>
+                    </div>
+
+                    <!-- إعدادات العلامة المائية -->
+                    <div class="panel-section">
+                        <h4>🏷️ إعدادات العلامة المائية</h4>
+                        <div class="watermark-controls">
+                            <div class="watermark-type">
+                                <label>
+                                    <input type="radio" name="watermarkType" value="text" checked> علامة مائية نصية
+                                </label>
+                                <label>
+                                    <input type="radio" name="watermarkType" value="image"> علامة مائية للصورة
+                                </label>
+                            </div>
+
+                            <!-- إعدادات العلامة المائية النصية -->
+                            <div class="text-watermark" id="textWatermark">
+                                <input type="text" id="watermarkText" placeholder="أدخل نص العلامة المائية"
+                                    value="عينة علامة مائية">
+
+                                <div class="watermark-style">
+                                    <label>حجم الخط:</label>
+                                    <input type="range" id="fontSize" min="12" max="72" value="24">
+                                    <span id="fontSizeValue">24px</span>
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>اللون:</label>
+                                    <input type="color" id="fontColor" value="#ff8200">
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>الشفافية:</label>
+                                    <input type="range" id="watermarkOpacity" min="0" max="100" value="80">
+                                    <span id="opacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- إعدادات علامة الصورة المائية -->
+                            <div class="image-watermark" id="imageWatermark" style="display: none;">
+                                <input type="file" id="watermarkImageInput" accept="image/*">
+                                <div class="watermark-style">
+                                    <label>الشفافية:</label>
+                                    <input type="range" id="watermarkImageOpacity" min="0" max="100" value="80">
+                                    <span id="imageOpacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- اختيار الموضع -->
+                            <div class="position-grid">
+                                <label>الموضع:</label>
+                                <div class="position-selector">
+                                    <button class="position-btn" data-position="top-left">↖</button>
+                                    <button class="position-btn" data-position="top-center">↑</button>
+                                    <button class="position-btn" data-position="top-right">↗</button>
+                                    <button class="position-btn" data-position="middle-left">←</button>
+                                    <button class="position-btn active" data-position="center">●</button>
+                                    <button class="position-btn" data-position="middle-right">→</button>
+                                    <button class="position-btn" data-position="bottom-left">↙</button>
+                                    <button class="position-btn" data-position="bottom-center">↓</button>
+                                    <button class="position-btn" data-position="bottom-right">↘</button>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="applyWatermarkBtn">تطبيق العلامة
+                                المائية</button>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <!-- دليل معرفة تنسيقات الصور -->
+    <section class="format-guide">
+        <div class="container">
             <h2>📚 دليل معرفة تنسيقات الصور</h2>
+            <p class="guide-intro">فهم خصائص تنسيقات الصور المختلفة واختيار التنسيق الأنسب لاحتياجاتك</p>
 
-            <div class="format-intro">
-                <p>لا تعرف أي تنسيق صورة تختار من بين التنسيقات المختلفة؟ تعرف على خصائص وسيناريوهات تطبيق كل تنسيق
-                    بالتفصيل!</p>
-            </div>
-
-            <div class="formats-overview">
+            <div class="format-grid">
                 <div class="format-card">
                     <div class="format-header">
                         <h3>JPEG</h3>
-                        <span class="format-tag">ضغط مع فقدان</span>
+                        <span class="format-badge jpeg">ضغط مع فقدان</span>
                     </div>
                     <div class="format-content">
-                        <p><strong>الخصائص:</strong> تنسيق الصور الأكثر شيوعًا، معدل ضغط ممتاز، حجم ملف صغير</p>
-                        <p><strong>سيناريوهات التطبيق:</strong> الصور، الصور ذات الألوان المعقدة، صفحات الويب</p>
-                        <p><strong>العيوب:</strong> لا يدعم الشفافية، ضغط مع فقدان، تدهور الجودة عند الحفظ المتكرر</p>
+                        <p class="format-description">تنسيق الصور الأكثر استخدامًا، مناسب للصور والصور المعقدة</p>
+                        <ul class="format-features">
+                            <li>✅ حجم ملف صغير، كفاءة ضغط عالية</li>
+                            <li>✅ يدعم ملايين الألوان</li>
+                            <li>✅ توافق ممتاز، مدعوم على جميع الأجهزة</li>
+                            <li>❌ لا يدعم الخلفية الشفافة</li>
+                            <li>❌ ضغط مع فقدان، تنخفض الجودة مع التحرير المتكرر</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>السيناريوهات المناسبة:</strong> مشاركة الصور، صور الويب، وسائل التواصل الاجتماعي
+                        </div>
                     </div>
                 </div>
 
                 <div class="format-card">
                     <div class="format-header">
                         <h3>PNG</h3>
-                        <span class="format-tag lossless">ضغط بلا فقدان</span>
+                        <span class="format-badge png">ضغط بلا فقدان</span>
                     </div>
                     <div class="format-content">
-                        <p><strong>الخصائص:</strong> ضغط بلا فقدان، دعم الشفافية، جودة عالية</p>
-                        <p><strong>سيناريوهات التطبيق:</strong> الشعارات، الأيقونات، الصور التي تحتاج خلفية شفافة</p>
-                        <p><strong>العيوب:</strong> حجم الملف كبير نسبيًا، غير فعال للصور المعقدة</p>
+                        <p class="format-description">تنسيق صور عالي الجودة، يدعم الخلفية الشفافة</p>
+                        <ul class="format-features">
+                            <li>✅ ضغط بلا فقدان، يحافظ على الجودة الأصلية</li>
+                            <li>✅ يدعم الخلفية الشفافة والتأثيرات شبه الشفافة</li>
+                            <li>✅ مناسب للرموز والشعارات والرسوميات البسيطة</li>
+                            <li>❌ حجم الملف كبير نسبيًا</li>
+                            <li>❌ غير فعال للصور المعقدة</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>السيناريوهات المناسبة:</strong> رموز المواقع، تصميم الشعارات، الصور التي تحتاج خلفية
+                            شفافة
+                        </div>
                     </div>
                 </div>
 
                 <div class="format-card">
                     <div class="format-header">
                         <h3>WEBP</h3>
-                        <span class="format-tag modern">حديث</span>
+                        <span class="format-badge webp">تنسيق حديث</span>
                     </div>
                     <div class="format-content">
-                        <p><strong>الخصائص:</strong> تطوير Google، معدل ضغط ممتاز، دعم الشفافية والرسوم المتحركة</p>
-                        <p><strong>سيناريوهات التطبيق:</strong> صفحات الويب، تطبيقات الهاتف المحمول، عندما يكون توفير
-                            النطاق الترددي مهمًا</p>
-                        <p><strong>العيوب:</strong> غير مدعوم في بعض المتصفحات القديمة</p>
+                        <p class="format-description">تنسيق صور حديث من Google، يوازن بين الجودة والحجم</p>
+                        <ul class="format-features">
+                            <li>✅ أصغر من JPEG بنسبة 25-35%، نفس الجودة</li>
+                            <li>✅ يدعم الضغط مع وبدون فقدان</li>
+                            <li>✅ يدعم الخلفية الشفافة والرسوم المتحركة</li>
+                            <li>❌ غير مدعوم في بعض المتصفحات القديمة</li>
+                            <li>❌ دعم محدود في برامج التحرير</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>السيناريوهات المناسبة:</strong> المواقع الحديثة، تطبيقات الهاتف المحمول، تحسين الويب
+                        </div>
                     </div>
                 </div>
 
                 <div class="format-card">
                     <div class="format-header">
                         <h3>BMP</h3>
-                        <span class="format-tag uncompressed">غير مضغوط</span>
+                        <span class="format-badge bmp">غير مضغوط</span>
                     </div>
                     <div class="format-content">
-                        <p><strong>الخصائص:</strong> تنسيق غير مضغوط، أعلى جودة، هيكل بسيط</p>
-                        <p><strong>سيناريوهات التطبيق:</strong> تحرير الصور، عندما تكون متطلبات الجودة عالية جدًا</p>
-                        <p><strong>العيوب:</strong> حجم الملف كبير جدًا، غير مناسب للاستخدام على الويب</p>
+                        <p class="format-description">تنسيق Windows الأصلي، ملف بت ماب غير مضغوط</p>
+                        <ul class="format-features">
+                            <li>✅ جودة بلا فقدان، حفظ كامل للأصل</li>
+                            <li>✅ هيكل بسيط، توافق جيد</li>
+                            <li>✅ يدعم أعماق ألوان متنوعة</li>
+                            <li>❌ حجم الملف كبير جدًا</li>
+                            <li>❌ لا يدعم الخلفية الشفافة</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>السيناريوهات المناسبة:</strong> تنسيق وسيط لمعالجة الصور، رموز النظام، استخدامات
+                            خاصة
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>GIF</h3>
+                        <span class="format-badge gif">يدعم الرسوم المتحركة</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">تنسيق صور يدعم الرسوم المتحركة، الخيار المفضل للرموز التعبيرية على
+                            الويب</p>
+                        <ul class="format-features">
+                            <li>✅ يدعم تأثيرات الرسوم المتحركة</li>
+                            <li>✅ يدعم الخلفية الشفافة</li>
+                            <li>✅ توافق ممتاز</li>
+                            <li>❌ يدعم 256 لون فقط</li>
+                            <li>❌ غير مناسب للصور والصور المعقدة</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>السيناريوهات المناسبة:</strong> الرموز التعبيرية المتحركة، الرسوم المتحركة البسيطة،
+                            زخارف الويب
+                        </div>
                     </div>
                 </div>
             </div>
@@ -290,110 +380,428 @@
                         <thead>
                             <tr>
                                 <th>التنسيق</th>
-                                <th>طريقة الضغط</th>
-                                <th>الشفافية</th>
-                                <th>الرسوم المتحركة</th>
+                                <th>نوع الضغط</th>
+                                <th>الخلفية الشفافة</th>
+                                <th>دعم الرسوم المتحركة</th>
                                 <th>حجم الملف</th>
-                                <th>الجودة</th>
                                 <th>دعم المتصفح</th>
+                                <th>السيناريو المناسب</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>JPEG</td>
+                                <td><strong>JPEG</strong></td>
                                 <td>مع فقدان</td>
                                 <td>❌</td>
                                 <td>❌</td>
                                 <td>صغير</td>
-                                <td>جيد</td>
                                 <td>100%</td>
+                                <td>الصور، الصور المعقدة</td>
                             </tr>
                             <tr>
-                                <td>PNG</td>
+                                <td><strong>PNG</strong></td>
                                 <td>بلا فقدان</td>
                                 <td>✅</td>
                                 <td>❌</td>
-                                <td>متوسط</td>
-                                <td>ممتاز</td>
+                                <td>كبير</td>
                                 <td>100%</td>
+                                <td>الرموز، الشعارات</td>
                             </tr>
                             <tr>
-                                <td>WEBP</td>
+                                <td><strong>WEBP</strong></td>
                                 <td>مع/بلا فقدان</td>
                                 <td>✅</td>
                                 <td>✅</td>
                                 <td>صغير جدًا</td>
-                                <td>ممتاز</td>
                                 <td>95%+</td>
+                                <td>المواقع الحديثة</td>
                             </tr>
                             <tr>
-                                <td>BMP</td>
+                                <td><strong>BMP</strong></td>
                                 <td>غير مضغوط</td>
                                 <td>❌</td>
                                 <td>❌</td>
                                 <td>كبير جدًا</td>
-                                <td>مثالي</td>
-                                <td>محدود</td>
+                                <td>100%</td>
+                                <td>الاستخدام المهني</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GIF</strong></td>
+                                <td>بلا فقدان</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>متوسط</td>
+                                <td>100%</td>
+                                <td>الرسوم المتحركة، الرموز التعبيرية</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="format-recommendations">
+            <div class="format-tips">
                 <h3>💡 توصيات الاختيار</h3>
-                <div class="recommendations-grid">
-                    <div class="recommendation-item">
-                        <h4>🌐 الاستخدام على الويب</h4>
-                        <p>يُنصح بـ WEBP > JPEG > PNG بهذا الترتيب. WEBP يوفر أفضل معدل ضغط، JPEG مناسب للصور، PNG مناسب
-                            للرسوميات التي تحتاج شفافية.</p>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>📱 مشاركة وسائل التواصل الاجتماعي</h4>
+                        <p>يُنصح باستخدام تنسيق <strong>JPEG</strong>، حجم ملف صغير وتحميل سريع، يلبي متطلبات معظم
+                            المنصات</p>
                     </div>
-                    <div class="recommendation-item">
-                        <h4>📱 تطبيقات الهاتف المحمول</h4>
-                        <p>حجم الملف مهم، لذا فكر في WEBP أولاً، واستخدم JPEG عند الحاجة للتوافق.</p>
+                    <div class="tip-card">
+                        <h4>🎨 عرض أعمال التصميم</h4>
+                        <p>يُنصح باستخدام تنسيق <strong>PNG</strong>، يحافظ على أفضل جودة ويدعم الخلفية الشفافة</p>
                     </div>
-                    <div class="recommendation-item">
-                        <h4>🎨 أعمال التصميم</h4>
-                        <p>استخدم PNG للشعارات أو الأيقونات التي تحتاج شفافية، JPEG للصور، BMP عندما تحتاج أعلى جودة.
-                        </p>
+                    <div class="tip-card">
+                        <h4>🌐 تحسين المواقع</h4>
+                        <p>يُنصح باستخدام تنسيق <strong>WEBP</strong>، يقلل حجم الملف بشكل كبير مع ضمان الجودة</p>
                     </div>
-                    <div class="recommendation-item">
-                        <h4>📄 المستندات/الطباعة</h4>
-                        <p>للمطبوعات عالية الدقة، يُنصح بـ PNG أو BMP، للمستندات العادية JPEG.</p>
+                    <div class="tip-card">
+                        <h4>😄 إنشاء الرموز التعبيرية</h4>
+                        <p>يُنصح باستخدام تنسيق <strong>GIF</strong>، يدعم تأثيرات الرسوم المتحركة ويتمتع بتوافق جيد</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <!-- نافذة معاينة الصور المنبثقة -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="previewTitle">معاينة الصورة</h3>
+                <button class="modal-close" id="closePreview">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="previewImage" src="" alt="صورة المعاينة">
+                <div class="image-info" id="imageInfo">
+                    <p><strong>اسم الملف:</strong> <span id="infoName">-</span></p>
+                    <p><strong>الأبعاد:</strong> <span id="infoDimensions">-</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- التذييل -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 أداة تحويل تنسيق الصور المجانية عبر الإنترنت. جميع الحقوق محفوظة.</p>
-            <p>معالجة مباشرة في المتصفح، حماية كاملة لخصوصية البيانات</p>
+    <!-- شريط التقدم -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-modal">
+            <h3>جاري المعالجة...</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">معالجة الصورة 1/10</p>
         </div>
-    </footer>
+    </div>
 
-    <!-- الجافا سكريبت -->
-    <script src="scripts/file-handler.js"></script>
-    <script src="scripts/image-processor.js"></script>
-    <script src="scripts/ui-components.js"></script>
-    <script src="scripts/main.js"></script>
+    <!-- تلميح تثبيت PWA -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-content">
+            <div class="install-icon">📱</div>
+            <div class="install-text">
+                <h4>تثبيت كتطبيق</h4>
+                <p>ثبت أداة معالجة الصور على جهازك واستمتع بتجربة الاستخدام دون اتصال</p>
+            </div>
+            <div class="install-actions">
+                <button class="btn btn-primary" id="installBtn">تثبيت</button>
+                <button class="btn btn-secondary" id="dismissBtn">ليس الآن</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- تسجيل PWA -->
+    <!-- تلميح تحديث PWA -->
+    <div class="update-prompt" id="updatePrompt">
+        <div class="update-content">
+            <div class="update-icon">🔄</div>
+            <div class="update-text">
+                <h4>تم اكتشاف إصدار جديد</h4>
+                <p>ميزات جديدة متاحة، هل تريد التحديث الآن؟</p>
+            </div>
+            <div class="update-actions">
+                <button class="btn btn-primary" id="updateBtn">تحديث</button>
+                <button class="btn btn-secondary" id="laterBtn">لاحقًا</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- تحميل مكتبة JSZip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- تهيئة PWA و Service Worker -->
     <script>
+        // تكوين النصوص العربية - إدارة موحدة لجميع النصوص العربية المستخدمة في JavaScript
+        window.TEXT_CONFIG = {
+            // تهيئة التطبيق
+            APP_INITIALIZED: 'تم تهيئة أداة معالجة الصور',
+
+            // معالجة الملفات
+            FILE_PROCESSING: 'جاري معالجة الملف...',
+            FILE_PROCESS_FAILED: 'فشل في معالجة الملف',
+            FILE_NAME_INVALID: 'اسم ملف غير صالح',
+            FILE_READ_FAILED: 'فشل في قراءة الملف',
+
+            // معالجة الصور
+            IMAGE_LOAD_FAILED: 'فشل في تحميل الصورة',
+            IMAGE_SIZE_READ_FAILED: 'لا يمكن قراءة معلومات حجم الصورة',
+            IMAGE_COMPRESS_FAILED: 'فشل في ضغط الصورة',
+            UNSUPPORTED_IMAGE_TYPE: 'نوع مصدر صورة غير مدعوم',
+            CANVAS_NOT_INITIALIZED: 'لم يتم تهيئة Canvas',
+            FORMAT_CONVERT_FAILED: 'فشل في تحويل التنسيق',
+
+            // معالجة العمليات
+            ROTATING_IMAGE: 'جاري تدوير الصورة...',
+            ROTATE_FAILED: 'فشل في التدوير',
+            FLIPPING_IMAGE: 'جاري انعكاس الصورة...',
+            FLIP_FAILED: 'فشل في الانعكاس',
+            RESETTING_IMAGE: 'جاري إعادة تعيين الصورة...',
+            RESET_FAILED: 'فشل في إعادة التعيين',
+
+            // تحويل التنسيق
+            CONVERTING_FORMAT: 'جاري تحويل التنسيق...',
+            FORMAT_CONVERT_ERROR: 'فشل في تحويل التنسيق',
+            SELECT_IMAGES_TO_CONVERT: 'الرجاء اختيار الصور المراد تحويلها أولاً',
+
+            // العلامة المائية
+            ADDING_WATERMARK: 'جاري إضافة العلامة المائية...',
+            WATERMARK_FAILED: 'فشل في إضافة العلامة المائية',
+            WATERMARK_IMAGE_LOADED: 'تم تحميل صورة العلامة المائية',
+            WATERMARK_IMAGE_LOAD_FAILED: 'فشل في تحميل صورة العلامة المائية',
+            WATERMARK_IMAGE_PROCESS_FAILED: 'فشل في معالجة صورة العلامة المائية',
+            SELECT_IMAGES_FOR_WATERMARK: 'الرجاء اختيار الصور لإضافة العلامة المائية أولاً',
+            SET_WATERMARK_CONTENT: 'الرجاء تعيين محتوى العلامة المائية',
+
+            // التحميل
+            PREPARING_DOWNLOAD: 'جاري تحضير التحميل...',
+            PACKING_FILES: 'جاري ضغط الملفات...',
+            DOWNLOAD_FAILED: 'فشل في التحميل',
+            JSZIP_NOT_LOADED: 'لم يتم تحميل مكتبة JSZip',
+            ZIP_GENERATE_FAILED: 'فشل في إنشاء ملف ZIP',
+
+            // مكونات واجهة المستخدم
+            MODAL_WINDOW: 'نافذة منبثقة',
+            DELETE_IMAGE: 'حذف الصورة',
+            SELECT_ALL: 'تحديد الكل',
+            DESELECT_ALL: 'إلغاء التحديد',
+            NO_IMAGES_SELECTED: 'لم يتم اختيار صور',
+            CONFIRM_DELETE_SINGLE: 'هل تريد حذف هذه الصورة؟',
+            CONFIRM_DELETE_MULTIPLE: 'هل تريد حذف هذه الصور الـ {count}؟',
+            DRAG_FILES_HERE: 'اسحب الملفات إلى هنا',
+
+            // المعاينة
+            IMAGE_PREVIEW: 'معاينة الصورة',
+
+            // حالة الشبكة
+            OFFLINE_MODE: '📡 وضع دون اتصال - وظائف محدودة',
+            NETWORK_RESTORED: 'تم استعادة اتصال الشبكة',
+            NETWORK_DISCONNECTED: 'انقطع اتصال الشبكة',
+            LAYOUT_UPDATED: 'تم تحديث التخطيط',
+
+            // PWA
+            PWA_INSTALL_SUCCESS: 'تم تثبيت PWA بنجاح',
+            APP_INSTALL_SUCCESS: 'تم تثبيت التطبيق بنجاح! يمكنك الآن الوصول إليه مباشرة من الشاشة الرئيسية.',
+            USER_ACCEPTED_INSTALL: 'قبل المستخدم تلميح التثبيت',
+            USER_REJECTED_INSTALL: 'رفض المستخدم تلميح التثبيت',
+
+            // معالجة الأخطاء
+            GLOBAL_ERROR: 'خطأ عام',
+            APP_ERROR_REFRESH: 'حدث خطأ في التطبيق، الرجاء تحديث الصفحة وإعادة المحاولة',
+            ALL_MANAGERS_INITIALIZED: 'تم تهيئة جميع المديرين',
+
+            // مراقبة الأداء
+            PAGE_LOAD_PERFORMANCE: 'بيانات أداء تحميل الصفحة',
+            HIGH_MEMORY_USAGE: 'استخدام الذاكرة مرتفع',
+
+            // التحقق من الملفات
+            UNSUPPORTED_FILE_FORMAT: 'تنسيق ملف غير مدعوم: {type}. التنسيقات المدعومة: JPG, PNG, GIF, WEBP, BMP',
+            FILE_TOO_LARGE: 'الملف كبير جدًا: {size}MB. الحد الأقصى المدعوم: {maxSize}MB',
+            FILE_PROCESS_ERROR: 'فشل في معالجة الملف {name}',
+
+            // رسائل النجاح
+            SUCCESS_ADD_IMAGES: 'تم إضافة {count} صورة بنجاح',
+            SUCCESS_DELETE_IMAGES: 'تم حذف {count} صورة',
+            SUCCESS_ROTATE_IMAGES: 'تم تدوير {count} صورة',
+            SUCCESS_FLIP_IMAGES: 'تم انعكاس {count} صورة',
+            SUCCESS_RESET_IMAGES: 'تم إعادة تعيين {count} صورة',
+            SUCCESS_CONVERT_IMAGES: 'تم تحويل {count} صورة إلى تنسيق {format}',
+            SUCCESS_ADD_WATERMARK: 'تم إضافة العلامة المائية لـ {count} صورة',
+            SUCCESS_DOWNLOAD_IMAGES: 'تم تحميل {count} صورة',
+
+            // عدد الصور
+            IMAGE_COUNT: '{count} صورة',
+            SELECTED_COUNT: 'تم اختيار {selected}/{total} صورة',
+
+            // نص شريط التقدم
+            PROCESSING: 'جاري المعالجة...',
+            PROCESSING_GENERIC: 'جاري المعالجة...',
+            PROGRESS_PERCENT: 'التقدم: {percent}%'
+        };
+
+        // تعريف قوالب HTML - إدارة موحدة لجميع قوالب HTML المستخدمة في JavaScript
+        window.HTML_TEMPLATES = {
+            // قالب النافذة المنبثقة
+            MODAL: `
+                <div class="modal-content">
+                </div>
+            `,
+
+            // زر إغلاق النافذة المنبثقة
+            MODAL_CLOSE_BUTTON: '<button class="modal-close">&times;</button>',
+
+            // قالب عنصر شبكة الصور
+            IMAGE_GRID_ITEM: `
+                <div class="image-header">
+                </div>
+                <img class="image-preview" src="{thumbnailUrl}" alt="{name}" loading="lazy">
+                <div class="image-info">
+                </div>
+            `,
+
+            // قالب شريط الأدوات
+            TOOLBAR: `
+                <div class="toolbar-left">
+                </div>
+                <div class="toolbar-right">
+                </div>
+            `,
+
+            // قالب تراكب التقدم
+            PROGRESS_OVERLAY: `
+                <div class="progress-modal">
+                </div>
+            `,
+
+            // قالب نمط الإشعارات
+            NOTIFICATION_STYLE: `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: {backgroundColor};
+                color: white;
+                padding: 12px 16px;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                max-width: 300px;
+                word-wrap: break-word;
+                animation: slideInRight 0.3s ease;
+            `
+        };
+
+        // تسجيل Service Worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
+            window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(function (registration) {
-                        console.log('تم تسجيل Service Worker بنجاح:', registration.scope);
+                    .then(registration => {
+                        console.log('تم تسجيل SW بنجاح:', registration);
+
+                        // فحص التحديثات
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdatePrompt();
+                                }
+                            });
+                        });
                     })
-                    .catch(function (error) {
-                        console.log('فشل تسجيل Service Worker:', error);
+                    .catch(error => {
+                        console.log('فشل تسجيل SW:', error);
                     });
             });
         }
+
+        // تلميح تثبيت PWA
+        let deferredPrompt;
+        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            if (!installPromptShown) {
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 3000); // عرض تلميح التثبيت بعد 3 ثوان
+            }
+        });
+
+        // عرض تلميح التثبيت
+        function showInstallPrompt() {
+            const installPrompt = document.getElementById('installPrompt');
+            if (installPrompt) {
+                installPrompt.style.display = 'flex';
+            }
+        }
+
+        // عرض تلميح التحديث
+        function showUpdatePrompt() {
+            const updatePrompt = document.getElementById('updatePrompt');
+            if (updatePrompt) {
+                updatePrompt.style.display = 'flex';
+            }
+        }
+
+        // أحداث زر التثبيت
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.getElementById('installBtn');
+            const dismissBtn = document.getElementById('dismissBtn');
+            const installPrompt = document.getElementById('installPrompt');
+
+            if (installBtn) {
+                installBtn.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('قبل المستخدم التثبيت');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            if (dismissBtn) {
+                dismissBtn.addEventListener('click', () => {
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            // أحداث زر التحديث
+            const updateBtn = document.getElementById('updateBtn');
+            const laterBtn = document.getElementById('laterBtn');
+            const updatePrompt = document.getElementById('updatePrompt');
+
+            if (updateBtn) {
+                updateBtn.addEventListener('click', () => {
+                    if (navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                    window.location.reload();
+                });
+            }
+
+            if (laterBtn) {
+                laterBtn.addEventListener('click', () => {
+                    updatePrompt.style.display = 'none';
+                });
+            }
+        });
+
+        // الاستماع لحدث اكتمال التثبيت
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('تم تثبيت PWA بنجاح');
+            // يمكن إضافة ملاحظات نجاح التثبيت هنا
+        });
     </script>
+
+    <!-- تحميل سكريبتات المشروع -->
+    <script src="scripts/image-processor.js"></script>
+    <script src="scripts/file-handler.js"></script>
+    <script src="scripts/ui-components.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 
 </html>
