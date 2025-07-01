@@ -92,7 +92,7 @@
                 <div class="language-switcher">
                     <span class="lang-current">中文</span>
                     <span class="lang-separator">|</span>
-                    <a href="index.html" class="lang-link">English</a>
+                    <a href="en.html" class="lang-link">English</a>
                     <span class="lang-separator">|</span>
                     <a href="de.html" class="lang-link">Deutsch</a>
                     <span class="lang-separator">|</span>
@@ -724,93 +724,6 @@
                     });
             });
         }
-
-        // PWA 安装提示
-        let deferredPrompt;
-        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-
-            if (!installPromptShown) {
-                setTimeout(() => {
-                    showInstallPrompt();
-                }, 3000); // 3秒后显示安装提示
-            }
-        });
-
-        // 显示安装提示
-        function showInstallPrompt() {
-            const installPrompt = document.getElementById('installPrompt');
-            if (installPrompt) {
-                installPrompt.style.display = 'flex';
-            }
-        }
-
-        // 显示更新提示
-        function showUpdatePrompt() {
-            const updatePrompt = document.getElementById('updatePrompt');
-            if (updatePrompt) {
-                updatePrompt.style.display = 'flex';
-            }
-        }
-
-        // 安装按钮事件
-        document.addEventListener('DOMContentLoaded', () => {
-            const installBtn = document.getElementById('installBtn');
-            const dismissBtn = document.getElementById('dismissBtn');
-            const installPrompt = document.getElementById('installPrompt');
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('用户接受安装');
-                            }
-                            deferredPrompt = null;
-                        });
-                    }
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    installPrompt.style.display = 'none';
-                    localStorage.setItem('installPromptShown', 'true');
-                });
-            }
-
-            // 更新按钮事件
-            const updateBtn = document.getElementById('updateBtn');
-            const laterBtn = document.getElementById('laterBtn');
-            const updatePrompt = document.getElementById('updatePrompt');
-
-            if (updateBtn) {
-                updateBtn.addEventListener('click', () => {
-                    if (navigator.serviceWorker.controller) {
-                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-                    }
-                    window.location.reload();
-                });
-            }
-
-            if (laterBtn) {
-                laterBtn.addEventListener('click', () => {
-                    updatePrompt.style.display = 'none';
-                });
-            }
-        });
-
-        // 监听安装完成事件
-        window.addEventListener('appinstalled', (evt) => {
-            console.log('PWA 安装成功');
-            // 可以在这里添加安装成功的反馈
-        });
     </script>
 
     <!-- 加载项目脚本 -->
