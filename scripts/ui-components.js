@@ -192,9 +192,6 @@ class UIComponents {
             const item = this.createImageGridItem(imageInfo);
             container.appendChild(item);
         });
-
-        // 更新图片计数
-        this.updateImageCount(images.length);
     }
 
     /**
@@ -331,17 +328,6 @@ class UIComponents {
         const overlay = document.getElementById('progressOverlay');
         if (overlay) {
             overlay.classList.remove('show');
-        }
-    }
-
-    /**
-     * 更新图片计数
-     * @param {number} count - 图片数量
-     */
-    static updateImageCount(count) {
-        const imageCountElement = document.getElementById('imageCount');
-        if (imageCountElement) {
-            imageCountElement.textContent = window.TEXT_CONFIG.IMAGE_COUNT.replace('{count}', count);
         }
     }
 
