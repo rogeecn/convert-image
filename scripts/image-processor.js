@@ -32,7 +32,7 @@ class ImageProcessor {
             };
 
             img.onerror = () => {
-                reject(new Error('图片加载失败'));
+                reject(new Error(window.TEXT_CONFIG.IMAGE_LOAD_FAILED));
             };
 
             if (source instanceof File) {
@@ -40,7 +40,7 @@ class ImageProcessor {
             } else if (typeof source === 'string') {
                 img.src = source;
             } else {
-                reject(new Error('不支持的图片源类型'));
+                reject(new Error(window.TEXT_CONFIG.UNSUPPORTED_IMAGE_TYPE));
             }
         });
     }
@@ -152,7 +152,7 @@ class ImageProcessor {
      */
     async convertFormat(format, quality = 0.9) {
         if (!this.canvas) {
-            throw new Error('Canvas 未初始化');
+            throw new Error(window.TEXT_CONFIG.CANVAS_NOT_INITIALIZED);
         }
 
         // 确保canvas有内容
@@ -168,7 +168,7 @@ class ImageProcessor {
                     if (blob) {
                         resolve(blob);
                     } else {
-                        reject(new Error('格式转换失败'));
+                        reject(new Error(window.TEXT_CONFIG.FORMAT_CONVERT_FAILED));
                     }
                 },
                 mimeType,

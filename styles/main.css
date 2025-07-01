@@ -884,3 +884,458 @@ body {
         padding-top: env(safe-area-inset-top, 1rem);
     }
 }
+
+/* 图片格式科普部分样式 */
+.format-guide {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 5rem 0;
+    margin-top: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.format-guide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.format-guide .container {
+    position: relative;
+    z-index: 1;
+}
+
+.format-guide h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: -0.5px;
+}
+
+.guide-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.format-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.1),
+        0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.format-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.format-card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.15),
+        0 4px 16px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 1);
+}
+
+.format-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.format-header h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #2c3e50;
+    letter-spacing: -0.3px;
+}
+
+.format-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.format-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.format-badge:hover::before {
+    left: 100%;
+}
+
+.format-badge.jpeg {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+}
+
+.format-badge.png {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    color: white;
+}
+
+.format-badge.webp {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.format-badge.bmp {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.format-badge.gif {
+    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+    color: #2d3436;
+}
+
+.format-description {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.format-features {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.format-features li {
+    padding: 0.6rem 0;
+    font-size: 0.95rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    line-height: 1.5;
+}
+
+.format-features li:hover {
+    color: #495057;
+}
+
+.format-features li:before {
+    margin-right: 0.75rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.format-use-case {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 1.25rem;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    font-size: 0.95rem;
+    color: #495057;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.format-use-case::before {
+    content: '💡';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.format-use-case strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* 格式对比表 */
+.format-comparison {
+    margin-bottom: 4rem;
+}
+
+.format-comparison h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: -0.3px;
+}
+
+.comparison-table {
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.1),
+        0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(233, 236, 239, 0.5);
+}
+
+.comparison-table th {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.comparison-table th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent);
+}
+
+.comparison-table tr {
+    transition: all 0.2s ease;
+}
+
+.comparison-table tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+    transform: scale(1.01);
+}
+
+.comparison-table td:first-child {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+/* 选择建议 */
+.format-tips h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: -0.3px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.tip-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.1),
+        0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.tip-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.tip-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.15),
+        0 4px 16px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 1);
+}
+
+.tip-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tip-card p {
+    color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.tip-card strong {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .format-guide {
+        padding: 3rem 0;
+    }
+
+    .format-guide h2 {
+        font-size: 2rem;
+    }
+
+    .format-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .format-card {
+        padding: 1.5rem;
+    }
+
+    .format-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .comparison-table {
+        font-size: 0.85rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 1rem 0.75rem;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .tip-card {
+        padding: 1.5rem;
+    }
+
+    .format-comparison h3,
+    .format-tips h3 {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .format-guide {
+        padding: 2rem 0;
+    }
+
+    .format-guide h2 {
+        font-size: 1.7rem;
+    }
+
+    .guide-intro {
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .format-card {
+        padding: 1.25rem;
+    }
+
+    .format-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .format-badge {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.65rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .tip-card {
+        padding: 1.25rem;
+    }
+
+    .tip-card h4 {
+        font-size: 1.1rem;
+    }
+
+    .format-comparison h3,
+    .format-tips h3 {
+        font-size: 1.5rem;
+    }
+}

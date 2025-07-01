@@ -11,7 +11,7 @@ class UIComponents {
      */
     static createModal(content, options = {}) {
         const {
-            title = '模态窗口',
+            title = window.TEXT_CONFIG.MODAL_WINDOW,
             className = '',
             closable = true,
             backdrop = true
@@ -20,17 +20,11 @@ class UIComponents {
         const modal = document.createElement('div');
         modal.className = `modal ${className}`;
 
-        modal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>${title}</h3>
-                    ${closable ? '<button class="modal-close">&times;</button>' : ''}
-                </div>
-                <div class="modal-body">
-                    ${content}
-                </div>
-            </div>
-        `;
+        const closeButton = closable ? window.HTML_TEMPLATES.MODAL_CLOSE_BUTTON : '';
+        modal.innerHTML = window.HTML_TEMPLATES.MODAL
+            .replace('{title}', title)
+            .replace('{closeButton}', closeButton)
+            .replace('{content}', content);
 
         // 添加事件监听
         if (closable) {
@@ -95,19 +89,17 @@ class UIComponents {
         // 创建缩略图URL
         const thumbnailUrl = this.createThumbnail(imageInfo);
 
-        item.innerHTML = `
-            <div class="image-header">
-                <input type="checkbox" class="image-checkbox" ${imageInfo.selected ? 'checked' : ''}>
-                <button class="image-delete" title="删除图片">×</button>
-            </div>
-            <img class="image-preview" src="${thumbnailUrl}" alt="${imageInfo.name}" loading="lazy">
-            <div class="image-info">
-                <h4 title="${imageInfo.name}">${this.truncateText(imageInfo.name, 20)}</h4>
-                <p>尺寸: ${imageInfo.width} × ${imageInfo.height}</p>
-                <p>大小: ${FileHandler.formatFileSize(imageInfo.size)}</p>
-                <p>格式: ${this.getFormatDisplay(imageInfo.type)}</p>
-            </div>
-        `;
+        const checkedAttr = imageInfo.selected ? 'checked' : '';
+        item.innerHTML = window.HTML_TEMPLATES.IMAGE_GRID_ITEM
+            .replace('{checked}', checkedAttr)
+            .replace('{deleteTitle}', window.TEXT_CONFIG.DELETE_IMAGE)
+            .replace('{thumbnailUrl}', thumbnailUrl)
+            .replace('{name}', imageInfo.name)
+            .replace('{truncatedName}', this.truncateText(imageInfo.name, 20))
+            .replace('{width}', imageInfo.width)
+            .replace('{height}', imageInfo.height)
+            .replace('{size}', FileHandler.formatFileSize(imageInfo.size))
+            .replace('{format}', this.getFormatDisplay(imageInfo.type));
 
         // 添加事件监听
         this.addImageItemEvents(item, imageInfo);
@@ -272,21 +264,7 @@ class UIComponents {
         toolbar.className = 'toolbar';
         toolbar.style.display = 'none';
 
-        toolbar.innerHTML = `
-            <div class="toolbar-left">
-                <button class="btn btn-secondary" id="selectAllBtn">全选</button>
-                <button class="btn btn-danger" id="deleteBtn" disabled>删除</button>
-                <span class="separator">|</span>
-                <button class="btn btn-secondary" id="rotateLeftBtn" disabled>↶ 左转</button>
-                <button class="btn btn-secondary" id="rotateRightBtn" disabled>↷ 右转</button>
-                <button class="btn btn-secondary" id="flipHBtn" disabled>⇄ 水平翻转</button>
-                <button class="btn btn-secondary" id="flipVBtn" disabled>⇅ 垂直翻转</button>
-                <button class="btn btn-secondary" id="resetBtn" disabled>↺ 重置</button>
-            </div>
-            <div class="toolbar-right">
-                <button class="btn btn-success" id="downloadBtn" disabled>📥 下载</button>
-            </div>
-        `;
+        toolbar.innerHTML = window.HTML_TEMPLATES.TOOLBAR;
 
         return toolbar;
     }
@@ -313,9 +291,9 @@ class UIComponents {
         // 更新全选按钮文本
         const selectAllBtn = document.getElementById('selectAllBtn');
         if (selectedCount === totalCount && totalCount > 0) {
-            selectAllBtn.textContent = '取消全选';
+            selectAllBtn.textContent = window.TEXT_CONFIG.DESELECT_ALL;
         } else {
-            selectAllBtn.textContent = '全选';
+            selectAllBtn.textContent = window.TEXT_CONFIG.SELECT_ALL;
         }
     }
 
@@ -331,15 +309,9 @@ class UIComponents {
             overlay = document.createElement('div');
             overlay.id = 'progressOverlay';
             overlay.className = 'progress-overlay';
-            overlay.innerHTML = `
-                <div class="progress-modal">
-                    <h3>处理中...</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p id="progressText">正在处理...</p>
-                </div>
-            `;
+            overlay.innerHTML = window.HTML_TEMPLATES.PROGRESS_OVERLAY
+                .replace('{processingTitle}', window.TEXT_CONFIG.PROCESSING)
+                .replace('{processingText}', window.TEXT_CONFIG.PROCESSING_GENERIC);
             document.body.appendChild(overlay);
         }
 
@@ -349,7 +321,7 @@ class UIComponents {
         const progressText = document.getElementById('progressText');
 
         progressFill.style.width = `${progress}%`;
-        progressText.textContent = text || `进度: ${progress}%`;
+        progressText.textContent = text || window.TEXT_CONFIG.PROGRESS_PERCENT.replace('{percent}', progress);
     }
 
     /**
@@ -369,7 +341,7 @@ class UIComponents {
     static updateImageCount(count) {
         const imageCountElement = document.getElementById('imageCount');
         if (imageCountElement) {
-            imageCountElement.textContent = `${count} 张图片`;
+            imageCountElement.textContent = window.TEXT_CONFIG.IMAGE_COUNT.replace('{count}', count);
         }
     }
 
@@ -382,9 +354,11 @@ class UIComponents {
         const selectedCountElement = document.getElementById('selectedCount');
         if (selectedCountElement) {
             if (selectedCount === 0) {
-                selectedCountElement.textContent = '未选择图片';
+                selectedCountElement.textContent = window.TEXT_CONFIG.NO_IMAGES_SELECTED;
             } else {
-                selectedCountElement.textContent = `已选择 ${selectedCount}/${totalCount} 张图片`;
+                selectedCountElement.textContent = window.TEXT_CONFIG.SELECTED_COUNT
+                    .replace('{selected}', selectedCount)
+                    .replace('{total}', totalCount);
             }
         }
     }
@@ -395,7 +369,9 @@ class UIComponents {
      */
     static confirmDelete(imageIds) {
         const count = imageIds.length;
-        const message = count === 1 ? '确定要删除这张图片吗？' : `确定要删除这 ${count} 张图片吗？`;
+        const message = count === 1 ?
+            window.TEXT_CONFIG.CONFIRM_DELETE_SINGLE :
+            window.TEXT_CONFIG.CONFIRM_DELETE_MULTIPLE.replace('{count}', count);
 
         if (confirm(message)) {
             this.dispatchCustomEvent('imageDelete', { imageIds });
@@ -439,7 +415,7 @@ class UIComponents {
     static createDragIndicator(container) {
         const indicator = document.createElement('div');
         indicator.className = 'drag-indicator';
-        indicator.textContent = '拖拽文件到此处';
+        indicator.textContent = window.TEXT_CONFIG.DRAG_FILES_HERE;
         container.appendChild(indicator);
         return indicator;
     }
@@ -490,21 +466,8 @@ class UIComponents {
             info: '#17a2b8'
         };
 
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${colors[type] || colors.info};
-            color: white;
-            padding: 12px 16px;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            z-index: 10000;
-            font-size: 14px;
-            max-width: 300px;
-            word-wrap: break-word;
-            animation: slideInRight 0.3s ease;
-        `;
+        notification.style.cssText = window.HTML_TEMPLATES.NOTIFICATION_STYLE
+            .replace('{backgroundColor}', colors[type] || colors.info);
 
         notification.textContent = message;
         document.body.appendChild(notification);

@@ -28,9 +28,9 @@ class FileHandler {
                     throw new Error(validation.error);
                 }
             } catch (error) {
-                console.error(`文件 ${file.name} 处理失败:`, error.message);
+                console.error(window.TEXT_CONFIG.FILE_PROCESS_ERROR.replace('{name}', file.name) + ':', error.message);
                 // 可以选择显示错误通知
-                this.showError(`文件 ${file.name} 处理失败: ${error.message}`);
+                this.showError(window.TEXT_CONFIG.FILE_PROCESS_ERROR.replace('{name}', file.name) + ': ' + error.message);
             }
         }
 
@@ -72,7 +72,7 @@ class FileHandler {
         if (!this.SUPPORTED_FORMATS.includes(file.type)) {
             return {
                 valid: false,
-                error: `不支持的文件格式: ${file.type}。支持的格式: JPG, PNG, GIF, WEBP, BMP`
+                error: window.TEXT_CONFIG.UNSUPPORTED_FILE_FORMAT.replace('{type}', file.type)
             };
         }
 
@@ -82,7 +82,9 @@ class FileHandler {
             const maxSizeMB = (this.MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
             return {
                 valid: false,
-                error: `文件过大: ${sizeMB}MB。最大支持: ${maxSizeMB}MB`
+                error: window.TEXT_CONFIG.FILE_TOO_LARGE
+                    .replace('{size}', sizeMB)
+                    .replace('{maxSize}', maxSizeMB)
             };
         }
 
@@ -90,7 +92,7 @@ class FileHandler {
         if (!file.name || file.name.trim() === '') {
             return {
                 valid: false,
-                error: '文件名无效'
+                error: window.TEXT_CONFIG.FILE_NAME_INVALID
             };
         }
 
@@ -157,7 +159,7 @@ class FileHandler {
 
             img.onerror = () => {
                 URL.revokeObjectURL(url);
-                reject(new Error('无法读取图片尺寸信息'));
+                reject(new Error(window.TEXT_CONFIG.IMAGE_SIZE_READ_FAILED));
             };
 
             img.src = url;
@@ -226,7 +228,7 @@ class FileHandler {
      */
     static async downloadMultiple(files, zipName = 'images.zip') {
         if (!window.JSZip) {
-            throw new Error('JSZip 库未加载');
+            throw new Error(window.TEXT_CONFIG.JSZIP_NOT_LOADED);
         }
 
         const zip = new JSZip();
@@ -251,7 +253,7 @@ class FileHandler {
             // 下载ZIP文件
             this.downloadFile(zipBlob, zipName);
         } catch (error) {
-            throw new Error('ZIP文件生成失败: ' + error.message);
+            throw new Error(window.TEXT_CONFIG.ZIP_GENERATE_FAILED + ': ' + error.message);
         }
     }
 
@@ -291,7 +293,7 @@ class FileHandler {
             };
 
             reader.onerror = () => {
-                reject(new Error('文件读取失败'));
+                reject(new Error(window.TEXT_CONFIG.FILE_READ_FAILED));
             };
 
             reader.readAsDataURL(file);
@@ -339,7 +341,7 @@ class FileHandler {
                         if (blob) {
                             resolve(blob);
                         } else {
-                            reject(new Error('图片压缩失败'));
+                            reject(new Error(window.TEXT_CONFIG.IMAGE_COMPRESS_FAILED));
                         }
                     },
                     `image/${format}`,
@@ -348,7 +350,7 @@ class FileHandler {
             };
 
             img.onerror = () => {
-                reject(new Error('图片加载失败'));
+                reject(new Error(window.TEXT_CONFIG.IMAGE_LOAD_FAILED));
             };
 
             img.src = URL.createObjectURL(file);

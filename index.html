@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO 优化 -->
-    <title>在线图片处理工具 - 免费图片格式转换、水印添加、批量处理</title>
+    <title>免费在线图片格式转换工具 - 免费在线图片格式转换、水印添加、批量处理</title>
     <meta name="description"
         content="免费在线图片处理工具，支持JPEG、PNG、WEBP、BMP格式转换，批量添加文字水印、图片水印，图片旋转翻转等功能。无需安装软件，浏览器直接使用，支持离线操作。">
     <meta name="keywords" content="图片格式转换,在线图片处理,批量图片处理,添加水印,图片压缩,JPEG转PNG,WEBP转换,免费图片工具">
@@ -17,7 +17,7 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yoursite.com/">
-    <meta property="og:title" content="在线图片处理工具 - 免费图片格式转换、水印添加">
+    <meta property="og:title" content="免费图片在线格式转换工具 - 免费图片格式转换、水印添加">
     <meta property="og:description" content="免费在线图片处理工具，支持多种格式转换和批量处理，无需安装软件。">
     <meta property="og:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
     <meta property="og:image:width" content="512">
@@ -27,7 +27,7 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yoursite.com/">
-    <meta property="twitter:title" content="在线图片处理工具 - 免费图片格式转换、水印添加">
+    <meta property="twitter:title" content="免费图片在线格式转换工具 - 免费图片格式转换、水印添加">
     <meta property="twitter:description" content="免费在线图片处理工具，支持多种格式转换和批量处理，无需安装软件。">
     <meta property="twitter:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
 
@@ -87,12 +87,17 @@
     <!-- 导航栏 -->
     <header class="header">
         <div class="container">
-            <h1 class="logo">📸 图片处理工具</h1>
+            <h1 class="logo">免费在线图片格式转换工具</h1>
             <div class="header-info">
                 <span id="imageCount">0 张图片</span>
             </div>
         </div>
     </header>
+    <div class="container">
+        <div class="header-description">
+            本工具集合了图片格式转换、批量处理、在线添加水印等多种实用功能。无需下载安装任何软件，直接在浏览器中使用，让图片处理变得简单快捷。无论您是设计师、摄影师还是普通用户，都能在这里找到满足需求的工具。
+        </div>
+    </div>
 
     <main class="main">
         <div class="container">
@@ -121,7 +126,7 @@
                     <button class="btn btn-secondary" id="resetBtn">↺ 重置</button>
                 </div>
                 <div class="toolbar-right">
-                    <button class="btn btn-success" id="downloadBtn">📥 下载</button>
+                    <button class="btn btn-success" id="downloadBtn">📥 保存并下载</button>
                 </div>
             </section>
 
@@ -233,6 +238,204 @@
         </div>
     </main>
 
+    <!-- 图片格式科普说明 -->
+    <section class="format-guide">
+        <div class="container">
+            <h2>📚 图片格式知识科普</h2>
+            <p class="guide-intro">了解不同图片格式的特点，选择最适合您需求的格式</p>
+
+            <div class="format-grid">
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>JPEG</h3>
+                        <span class="format-badge jpeg">有损压缩</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">最常用的图片格式，适合照片和复杂图像</p>
+                        <ul class="format-features">
+                            <li>✅ 文件体积小，压缩效率高</li>
+                            <li>✅ 支持数百万种颜色</li>
+                            <li>✅ 兼容性极佳，所有设备都支持</li>
+                            <li>❌ 不支持透明背景</li>
+                            <li>❌ 有损压缩，多次编辑会降低质量</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>适用场景：</strong>照片分享、网页图片、社交媒体
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>PNG</h3>
+                        <span class="format-badge png">无损压缩</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">高质量图片格式，支持透明背景</p>
+                        <ul class="format-features">
+                            <li>✅ 无损压缩，保持原始质量</li>
+                            <li>✅ 支持透明背景和半透明效果</li>
+                            <li>✅ 适合图标、徽标等简单图形</li>
+                            <li>❌ 文件体积较大</li>
+                            <li>❌ 不适合复杂照片</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>适用场景：</strong>网站图标、徽标设计、需要透明背景的图片
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>WEBP</h3>
+                        <span class="format-badge webp">现代格式</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Google开发的现代图片格式，平衡质量和体积</p>
+                        <ul class="format-features">
+                            <li>✅ 比JPEG小25-35%，质量相同</li>
+                            <li>✅ 同时支持有损和无损压缩</li>
+                            <li>✅ 支持透明背景和动画</li>
+                            <li>❌ 部分老旧浏览器不支持</li>
+                            <li>❌ 编辑软件支持有限</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>适用场景：</strong>现代网站、移动应用、网页优化
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>BMP</h3>
+                        <span class="format-badge bmp">未压缩</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Windows原生格式，未压缩的位图文件</p>
+                        <ul class="format-features">
+                            <li>✅ 无损画质，完全保真</li>
+                            <li>✅ 简单结构，兼容性好</li>
+                            <li>✅ 支持多种色深</li>
+                            <li>❌ 文件体积极大</li>
+                            <li>❌ 不支持透明背景</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>适用场景：</strong>图像处理中间格式、系统图标、特殊用途
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>GIF</h3>
+                        <span class="format-badge gif">动画支持</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">支持动画的图片格式，网络表情包首选</p>
+                        <ul class="format-features">
+                            <li>✅ 支持动画效果</li>
+                            <li>✅ 支持透明背景</li>
+                            <li>✅ 兼容性极佳</li>
+                            <li>❌ 只支持256种颜色</li>
+                            <li>❌ 不适合照片和复杂图像</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>适用场景：</strong>动画表情包、简单动画、网页装饰
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-comparison">
+                <h3>📊 格式对比表</h3>
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>格式</th>
+                                <th>压缩类型</th>
+                                <th>透明背景</th>
+                                <th>动画支持</th>
+                                <th>文件大小</th>
+                                <th>浏览器支持</th>
+                                <th>适用场景</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>JPEG</strong></td>
+                                <td>有损</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>小</td>
+                                <td>100%</td>
+                                <td>照片、复杂图像</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PNG</strong></td>
+                                <td>无损</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                                <td>大</td>
+                                <td>100%</td>
+                                <td>图标、徽标</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WEBP</strong></td>
+                                <td>有损/无损</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>很小</td>
+                                <td>95%+</td>
+                                <td>现代网站</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BMP</strong></td>
+                                <td>无压缩</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>极大</td>
+                                <td>100%</td>
+                                <td>专业用途</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GIF</strong></td>
+                                <td>无损</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>中等</td>
+                                <td>100%</td>
+                                <td>动画、表情包</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="format-tips">
+                <h3>💡 选择建议</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>📱 社交媒体分享</h4>
+                        <p>推荐使用 <strong>JPEG</strong> 格式，文件小、加载快，满足大多数平台要求</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🎨 设计作品展示</h4>
+                        <p>推荐使用 <strong>PNG</strong> 格式，保持最佳画质，支持透明背景</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🌐 网站优化</h4>
+                        <p>推荐使用 <strong>WEBP</strong> 格式，在保证质量的同时显著减小文件体积</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>😄 制作表情包</h4>
+                        <p>推荐使用 <strong>GIF</strong> 格式，支持动画效果，兼容性好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 图片预览模态窗口 -->
     <div class="modal" id="previewModal">
         <div class="modal-content">
@@ -298,6 +501,192 @@
 
     <!-- PWA 和 Service Worker 初始化 -->
     <script>
+        // 中文字符串配置 - 统一管理所有 JavaScript 中使用的中文文本
+        window.TEXT_CONFIG = {
+            // 应用初始化
+            APP_INITIALIZED: '图片处理工具已初始化',
+
+            // 文件处理相关
+            FILE_PROCESSING: '正在处理文件...',
+            FILE_PROCESS_FAILED: '文件处理失败',
+            FILE_NAME_INVALID: '文件名无效',
+            FILE_READ_FAILED: '文件读取失败',
+
+            // 图片处理相关
+            IMAGE_LOAD_FAILED: '图片加载失败',
+            IMAGE_SIZE_READ_FAILED: '无法读取图片尺寸信息',
+            IMAGE_COMPRESS_FAILED: '图片压缩失败',
+            UNSUPPORTED_IMAGE_TYPE: '不支持的图片源类型',
+            CANVAS_NOT_INITIALIZED: 'Canvas 未初始化',
+            FORMAT_CONVERT_FAILED: '格式转换失败',
+
+            // 操作处理
+            ROTATING_IMAGE: '正在旋转图片...',
+            ROTATE_FAILED: '旋转失败',
+            FLIPPING_IMAGE: '正在翻转图片...',
+            FLIP_FAILED: '翻转失败',
+            RESETTING_IMAGE: '正在重置图片...',
+            RESET_FAILED: '重置失败',
+
+            // 格式转换
+            CONVERTING_FORMAT: '正在转换格式...',
+            FORMAT_CONVERT_ERROR: '格式转换失败',
+            SELECT_IMAGES_TO_CONVERT: '请先选择要转换的图片',
+
+            // 水印相关
+            ADDING_WATERMARK: '正在添加水印...',
+            WATERMARK_FAILED: '添加水印失败',
+            WATERMARK_IMAGE_LOADED: '水印图片已加载',
+            WATERMARK_IMAGE_LOAD_FAILED: '水印图片加载失败',
+            WATERMARK_IMAGE_PROCESS_FAILED: '水印图片处理失败',
+            SELECT_IMAGES_FOR_WATERMARK: '请先选择要添加水印的图片',
+            SET_WATERMARK_CONTENT: '请设置水印内容',
+
+            // 下载相关
+            PREPARING_DOWNLOAD: '正在准备下载...',
+            PACKING_FILES: '正在打包文件...',
+            DOWNLOAD_FAILED: '下载失败',
+            JSZIP_NOT_LOADED: 'JSZip 库未加载',
+            ZIP_GENERATE_FAILED: 'ZIP文件生成失败',
+
+            // UI 组件
+            MODAL_WINDOW: '模态窗口',
+            DELETE_IMAGE: '删除图片',
+            SELECT_ALL: '全选',
+            DESELECT_ALL: '取消全选',
+            NO_IMAGES_SELECTED: '未选择图片',
+            CONFIRM_DELETE_SINGLE: '确定要删除这张图片吗？',
+            CONFIRM_DELETE_MULTIPLE: '确定要删除这 {count} 张图片吗？',
+            DRAG_FILES_HERE: '拖拽文件到此处',
+
+            // 预览相关
+            IMAGE_PREVIEW: '图片预览',
+
+            // 网络状态
+            OFFLINE_MODE: '📡 离线模式 - 部分功能受限',
+            NETWORK_RESTORED: '网络连接已恢复',
+            NETWORK_DISCONNECTED: '网络连接已断开',
+            LAYOUT_UPDATED: '布局已更新',
+
+            // PWA 相关
+            PWA_INSTALL_SUCCESS: 'PWA 安装成功',
+            APP_INSTALL_SUCCESS: '应用安装成功！现在可以从主屏幕直接访问。',
+            USER_ACCEPTED_INSTALL: '用户接受了安装提示',
+            USER_REJECTED_INSTALL: '用户拒绝了安装提示',
+
+            // 错误处理
+            GLOBAL_ERROR: '全局错误',
+            APP_ERROR_REFRESH: '应用发生错误，请刷新页面重试',
+            ALL_MANAGERS_INITIALIZED: '所有管理器已初始化',
+
+            // 性能监控
+            PAGE_LOAD_PERFORMANCE: '页面加载性能数据',
+            HIGH_MEMORY_USAGE: '内存使用率过高',
+
+            // 文件验证
+            UNSUPPORTED_FILE_FORMAT: '不支持的文件格式: {type}。支持的格式: JPG, PNG, GIF, WEBP, BMP',
+            FILE_TOO_LARGE: '文件过大: {size}MB。最大支持: {maxSize}MB',
+            FILE_PROCESS_ERROR: '文件 {name} 处理失败',
+
+            // 成功消息
+            SUCCESS_ADD_IMAGES: '成功添加 {count} 张图片',
+            SUCCESS_DELETE_IMAGES: '已删除 {count} 张图片',
+            SUCCESS_ROTATE_IMAGES: '已旋转 {count} 张图片',
+            SUCCESS_FLIP_IMAGES: '已翻转 {count} 张图片',
+            SUCCESS_RESET_IMAGES: '已重置 {count} 张图片',
+            SUCCESS_CONVERT_IMAGES: '已转换 {count} 张图片为 {format} 格式',
+            SUCCESS_ADD_WATERMARK: '已为 {count} 张图片添加水印',
+            SUCCESS_DOWNLOAD_IMAGES: '已下载 {count} 张图片',
+
+            // 图片计数
+            IMAGE_COUNT: '{count} 张图片',
+            SELECTED_COUNT: '已选择 {selected}/{total} 张图片',
+
+            // 进度条文本
+            PROCESSING: '处理中...',
+            PROCESSING_GENERIC: '正在处理...',
+            PROGRESS_PERCENT: '进度: {percent}%'
+        };
+
+        // HTML 模板定义 - 统一管理所有 JavaScript 中使用的 HTML 模板
+        window.HTML_TEMPLATES = {
+            // 模态窗口模板
+            MODAL: `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>{title}</h3>
+                        {closeButton}
+                    </div>
+                    <div class="modal-body">
+                        {content}
+                    </div>
+                </div>
+            `,
+
+            // 模态窗口关闭按钮
+            MODAL_CLOSE_BUTTON: '<button class="modal-close">&times;</button>',
+
+            // 图片网格项模板
+            IMAGE_GRID_ITEM: `
+                <div class="image-header">
+                    <input type="checkbox" class="image-checkbox" {checked}>
+                    <button class="image-delete" title="{deleteTitle}">×</button>
+                </div>
+                <img class="image-preview" src="{thumbnailUrl}" alt="{name}" loading="lazy">
+                <div class="image-info">
+                    <h4 title="{name}">{truncatedName}</h4>
+                    <p>尺寸: {width} × {height}</p>
+                    <p>大小: {size}</p>
+                    <p>格式: {format}</p>
+                </div>
+            `,
+
+            // 工具栏模板
+            TOOLBAR: `
+                <div class="toolbar-left">
+                    <button class="btn btn-secondary" id="selectAllBtn">全选</button>
+                    <button class="btn btn-danger" id="deleteBtn" disabled>删除</button>
+                    <span class="separator">|</span>
+                    <button class="btn btn-secondary" id="rotateLeftBtn" disabled>↶ 左转</button>
+                    <button class="btn btn-secondary" id="rotateRightBtn" disabled>↷ 右转</button>
+                    <button class="btn btn-secondary" id="flipHBtn" disabled>⇄ 水平翻转</button>
+                    <button class="btn btn-secondary" id="flipVBtn" disabled>⇅ 垂直翻转</button>
+                    <button class="btn btn-secondary" id="resetBtn" disabled>↺ 重置</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-success" id="downloadBtn" disabled>📥 下载</button>
+                </div>
+            `,
+
+            // 进度条模板
+            PROGRESS_OVERLAY: `
+                <div class="progress-modal">
+                    <h3>{processingTitle}</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">{processingText}</p>
+                </div>
+            `,
+
+            // 通知样式模板
+            NOTIFICATION_STYLE: `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: {backgroundColor};
+                color: white;
+                padding: 12px 16px;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                max-width: 300px;
+                word-wrap: break-word;
+                animation: slideInRight 0.3s ease;
+            `
+        };
+
         // Service Worker 注册
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

@@ -33,7 +33,7 @@ class ImageConverterApp {
     init() {
         this.setupEventListeners();
         this.initializeUI();
-        console.log('图片处理工具已初始化');
+        console.log(window.TEXT_CONFIG.APP_INITIALIZED);
     }
 
     /**
@@ -306,7 +306,7 @@ class ImageConverterApp {
     async handleFileSelect(files) {
         if (files.length === 0) return;
 
-        UIComponents.showProgress(0, '正在处理文件...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.FILE_PROCESSING);
 
         try {
             const newImages = await FileHandler.handleFileSelect(files);
@@ -323,10 +323,10 @@ class ImageConverterApp {
             this.updateToolbarState();
             this.showToolbarIfNeeded();
 
-            FileHandler.showSuccess(`成功添加 ${newImages.length} 张图片`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_ADD_IMAGES.replace('{count}', newImages.length));
         } catch (error) {
-            console.error('文件处理失败:', error);
-            FileHandler.showError('文件处理失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.FILE_PROCESS_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.FILE_PROCESS_FAILED + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -344,7 +344,7 @@ class ImageConverterApp {
             this.updateToolbarState();
             this.showToolbarIfNeeded();
 
-            FileHandler.showSuccess(`成功添加 ${newImages.length} 张图片`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_ADD_IMAGES.replace('{count}', newImages.length));
         }
     }
 
@@ -440,7 +440,7 @@ class ImageConverterApp {
         this.updateSidePanelState();
         this.hideToolbarIfEmpty();
 
-        FileHandler.showSuccess(`已删除 ${imageIds.length} 张图片`);
+        FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_DELETE_IMAGES.replace('{count}', imageIds.length));
     }
 
     /**
@@ -449,7 +449,7 @@ class ImageConverterApp {
     async rotateSelected(angle) {
         if (this.selectedImages.size === 0) return;
 
-        UIComponents.showProgress(0, '正在旋转图片...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.ROTATING_IMAGE);
 
         try {
             const selectedImagesList = this.images.filter(img => this.selectedImages.has(img.id));
@@ -463,10 +463,10 @@ class ImageConverterApp {
             }
 
             this.updateImageGrid();
-            FileHandler.showSuccess(`已旋转 ${selectedImagesList.length} 张图片`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_ROTATE_IMAGES.replace('{count}', selectedImagesList.length));
         } catch (error) {
-            console.error('旋转失败:', error);
-            FileHandler.showError('旋转失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.ROTATE_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.ROTATE_FAILED + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -478,7 +478,7 @@ class ImageConverterApp {
     async flipSelected(direction) {
         if (this.selectedImages.size === 0) return;
 
-        UIComponents.showProgress(0, '正在翻转图片...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.FLIPPING_IMAGE);
 
         try {
             const selectedImagesList = this.images.filter(img => this.selectedImages.has(img.id));
@@ -492,10 +492,10 @@ class ImageConverterApp {
             }
 
             this.updateImageGrid();
-            FileHandler.showSuccess(`已翻转 ${selectedImagesList.length} 张图片`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_FLIP_IMAGES.replace('{count}', selectedImagesList.length));
         } catch (error) {
-            console.error('翻转失败:', error);
-            FileHandler.showError('翻转失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.FLIP_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.FLIP_FAILED + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -507,7 +507,7 @@ class ImageConverterApp {
     async resetSelected() {
         if (this.selectedImages.size === 0) return;
 
-        UIComponents.showProgress(0, '正在重置图片...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.RESETTING_IMAGE);
 
         try {
             const selectedImagesList = this.images.filter(img => this.selectedImages.has(img.id));
@@ -521,10 +521,10 @@ class ImageConverterApp {
             }
 
             this.updateImageGrid();
-            FileHandler.showSuccess(`已重置 ${selectedImagesList.length} 张图片`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_RESET_IMAGES.replace('{count}', selectedImagesList.length));
         } catch (error) {
-            console.error('重置失败:', error);
-            FileHandler.showError('重置失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.RESET_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.RESET_FAILED + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -661,7 +661,7 @@ class ImageConverterApp {
         document.getElementById('infoSize').textContent = FileHandler.formatFileSize(image.size);
         document.getElementById('infoFormat').textContent = UIComponents.getFormatDisplay(image.type);
 
-        previewTitle.textContent = '图片预览 - ' + image.name;
+        previewTitle.textContent = window.TEXT_CONFIG.IMAGE_PREVIEW + ' - ' + image.name;
         previewImage.src = image.url;
 
         previewModal.classList.add('show');
@@ -672,11 +672,11 @@ class ImageConverterApp {
      */
     async convertSelectedFormat() {
         if (this.selectedImages.size === 0) {
-            FileHandler.showError('请先选择要转换的图片');
+            FileHandler.showError(window.TEXT_CONFIG.SELECT_IMAGES_TO_CONVERT);
             return;
         }
 
-        UIComponents.showProgress(0, '正在转换格式...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.CONVERTING_FORMAT);
 
         try {
             const selectedImagesList = this.images.filter(img => this.selectedImages.has(img.id));
@@ -690,10 +690,12 @@ class ImageConverterApp {
             }
 
             this.updateImageGrid();
-            FileHandler.showSuccess(`已转换 ${selectedImagesList.length} 张图片为 ${this.formatSettings.format.toUpperCase()} 格式`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_CONVERT_IMAGES
+                .replace('{count}', selectedImagesList.length)
+                .replace('{format}', this.formatSettings.format.toUpperCase()));
         } catch (error) {
-            console.error('格式转换失败:', error);
-            FileHandler.showError('格式转换失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.FORMAT_CONVERT_ERROR + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.FORMAT_CONVERT_ERROR + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -757,17 +759,17 @@ class ImageConverterApp {
 
             img.onload = () => {
                 this.watermarkSettings.image = img;
-                FileHandler.showSuccess('水印图片已加载');
+                FileHandler.showSuccess(window.TEXT_CONFIG.WATERMARK_IMAGE_LOADED);
             };
 
             img.onerror = () => {
-                FileHandler.showError('水印图片加载失败');
+                FileHandler.showError(window.TEXT_CONFIG.WATERMARK_IMAGE_LOAD_FAILED);
             };
 
             img.src = url;
         } catch (error) {
-            console.error('水印图片处理失败:', error);
-            FileHandler.showError('水印图片处理失败');
+            console.error(window.TEXT_CONFIG.WATERMARK_IMAGE_PROCESS_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.WATERMARK_IMAGE_PROCESS_FAILED);
         }
     }
 
@@ -776,16 +778,16 @@ class ImageConverterApp {
      */
     async applyWatermarkToSelected() {
         if (this.selectedImages.size === 0) {
-            FileHandler.showError('请先选择要添加水印的图片');
+            FileHandler.showError(window.TEXT_CONFIG.SELECT_IMAGES_FOR_WATERMARK);
             return;
         }
 
         if (!this.watermarkSettings.content && !this.watermarkSettings.image) {
-            FileHandler.showError('请设置水印内容');
+            FileHandler.showError(window.TEXT_CONFIG.SET_WATERMARK_CONTENT);
             return;
         }
 
-        UIComponents.showProgress(0, '正在添加水印...');
+        UIComponents.showProgress(0, window.TEXT_CONFIG.ADDING_WATERMARK);
 
         try {
             const selectedImagesList = this.images.filter(img => this.selectedImages.has(img.id));
@@ -799,10 +801,10 @@ class ImageConverterApp {
             }
 
             this.updateImageGrid();
-            FileHandler.showSuccess(`已为 ${selectedImagesList.length} 张图片添加水印`);
+            FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_ADD_WATERMARK.replace('{count}', selectedImagesList.length));
         } catch (error) {
-            console.error('添加水印失败:', error);
-            FileHandler.showError('添加水印失败: ' + error.message);
+            console.error(window.TEXT_CONFIG.WATERMARK_FAILED + ':', error);
+            FileHandler.showError(window.TEXT_CONFIG.WATERMARK_FAILED + ': ' + error.message);
         } finally {
             UIComponents.hideProgress();
         }
@@ -867,7 +869,7 @@ class ImageConverterApp {
             FileHandler.downloadFile(blob, image.name);
         } else {
             // 批量下载
-            UIComponents.showProgress(0, '正在准备下载...');
+            UIComponents.showProgress(0, window.TEXT_CONFIG.PREPARING_DOWNLOAD);
 
             try {
                 const files = [];
@@ -886,15 +888,15 @@ class ImageConverterApp {
                     UIComponents.showProgress(progress, `准备文件 ${i + 1}/${imagesToDownload.length}`);
                 }
 
-                UIComponents.showProgress(90, '正在打包文件...');
+                UIComponents.showProgress(90, window.TEXT_CONFIG.PACKING_FILES);
 
                 const zipName = `images_${new Date().getTime()}.zip`;
                 await FileHandler.downloadMultiple(files, zipName);
 
-                FileHandler.showSuccess(`已下载 ${files.length} 张图片`);
+                FileHandler.showSuccess(window.TEXT_CONFIG.SUCCESS_DOWNLOAD_IMAGES.replace('{count}', files.length));
             } catch (error) {
-                console.error('下载失败:', error);
-                FileHandler.showError('下载失败: ' + error.message);
+                console.error(window.TEXT_CONFIG.DOWNLOAD_FAILED + ':', error);
+                FileHandler.showError(window.TEXT_CONFIG.DOWNLOAD_FAILED + ': ' + error.message);
             } finally {
                 UIComponents.hideProgress();
             }
@@ -1006,7 +1008,7 @@ class ImageConverterApp {
      */
     updateLayout() {
         // 可以在这里添加响应式布局调整逻辑
-        console.log('布局已更新');
+        console.log(window.TEXT_CONFIG.LAYOUT_UPDATED);
     }
 }
 
@@ -1030,7 +1032,7 @@ class NetworkManager {
     createOfflineIndicator() {
         this.offlineIndicator = document.createElement('div');
         this.offlineIndicator.className = 'offline-indicator';
-        this.offlineIndicator.innerHTML = '📡 离线模式 - 部分功能受限';
+        this.offlineIndicator.innerHTML = window.TEXT_CONFIG.OFFLINE_MODE;
         document.body.appendChild(this.offlineIndicator);
     }
 
@@ -1038,13 +1040,13 @@ class NetworkManager {
         window.addEventListener('online', () => {
             this.isOnline = true;
             this.updateNetworkStatus();
-            console.log('网络连接已恢复');
+            console.log(window.TEXT_CONFIG.NETWORK_RESTORED);
         });
 
         window.addEventListener('offline', () => {
             this.isOnline = false;
             this.updateNetworkStatus();
-            console.log('网络连接已断开');
+            console.log(window.TEXT_CONFIG.NETWORK_DISCONNECTED);
         });
     }
 
@@ -1112,7 +1114,7 @@ class PWAManager {
 
     setupAppInstalledEvent() {
         window.addEventListener('appinstalled', (evt) => {
-            console.log('PWA 安装成功');
+            console.log(window.TEXT_CONFIG.PWA_INSTALL_SUCCESS);
             this.hideInstallPrompt();
             this.showInstallSuccessMessage();
         });
@@ -1137,7 +1139,7 @@ class PWAManager {
     showInstallSuccessMessage() {
         // 可以显示安装成功的提示消息
         if (window.app && window.app.showMessage) {
-            window.app.showMessage('应用安装成功！现在可以从主屏幕直接访问。', 'success');
+            window.app.showMessage(window.TEXT_CONFIG.APP_INSTALL_SUCCESS, 'success');
         }
     }
 
@@ -1147,9 +1149,9 @@ class PWAManager {
             const { outcome } = await this.deferredPrompt.userChoice;
 
             if (outcome === 'accepted') {
-                console.log('用户接受了安装提示');
+                console.log(window.TEXT_CONFIG.USER_ACCEPTED_INSTALL);
             } else {
-                console.log('用户拒绝了安装提示');
+                console.log(window.TEXT_CONFIG.USER_REJECTED_INSTALL);
             }
 
             this.deferredPrompt = null;
@@ -1179,7 +1181,7 @@ class PerformanceMonitor {
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const perfData = performance.getEntriesByType('navigation')[0];
-                console.log('页面加载性能数据:', {
+                console.log(window.TEXT_CONFIG.PAGE_LOAD_PERFORMANCE, {
                     loadTime: perfData.loadEventEnd - perfData.loadEventStart,
                     domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
                     totalTime: perfData.loadEventEnd - perfData.fetchStart
@@ -1193,7 +1195,7 @@ class PerformanceMonitor {
             setInterval(() => {
                 const memory = performance.memory;
                 if (memory.usedJSHeapSize > memory.jsHeapSizeLimit * 0.9) {
-                    console.warn('内存使用率过高:', {
+                    console.warn(window.TEXT_CONFIG.HIGH_MEMORY_USAGE, {
                         used: Math.round(memory.usedJSHeapSize / 1024 / 1024),
                         total: Math.round(memory.jsHeapSizeLimit / 1024 / 1024)
                     });
@@ -1214,7 +1216,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // 初始化性能监控
     window.performanceMonitor = new PerformanceMonitor();
 
-    console.log('所有管理器已初始化');
+    console.log(window.TEXT_CONFIG.ALL_MANAGERS_INITIALIZED);
 });
 
 // 页面加载完成后初始化应用
@@ -1224,8 +1226,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 全局错误处理
 window.addEventListener('error', (e) => {
-    console.error('全局错误:', e.error);
-    FileHandler.showError('应用发生错误，请刷新页面重试');
+    console.error(window.TEXT_CONFIG.GLOBAL_ERROR + ':', e.error);
+    FileHandler.showError(window.TEXT_CONFIG.APP_ERROR_REFRESH);
 });
 
 // 预览模态窗口关闭事件
