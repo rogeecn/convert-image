@@ -1370,3 +1370,81 @@ body {
         font-size: 1.5rem;
     }
 }
+
+/* RTL (Right-to-Left) 布局支持 - 阿拉伯语 */
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] .header .container {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .header-info {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .language-switcher {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .option-tabs {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .format-buttons {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .type-buttons {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .transform-buttons {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .action-buttons {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .control-row {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .preview-item {
+    text-align: right;
+}
+
+[dir="rtl"] .format-card {
+    text-align: right;
+}
+
+[dir="rtl"] .recommendation-item {
+    text-align: right;
+}
+
+[dir="rtl"] .formats-overview {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+[dir="rtl"] .recommendations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* RTL 移动端适配 */
+@media (max-width: 768px) {
+    [dir="rtl"] .header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    [dir="rtl"] .header-info {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    [dir="rtl"] .language-switcher {
+        justify-content: center;
+    }
+}

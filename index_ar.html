@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- تحسين محركات البحث -->
+    <title>أداة تحويل تنسيق الصور المجانية عبر الإنترنت - تحويل تنسيق الصور، إضافة العلامة المائية، المعالجة المجمعة
+    </title>
+    <meta name="description"
+        content="أداة معالجة الصور المجانية عبر الإنترنت، تحويل تنسيقات JPEG، PNG، WEBP، BMP، العلامات المائية النصية المجمعة، العلامات المائية للصور، دوران وانعكاس الصور. لا حاجة لتثبيت البرامج، استخدام مباشر في المتصفح، دعم العمل دون اتصال.">
+    <meta name="keywords"
+        content="تحويل تنسيق الصورة,معالجة الصور عبر الإنترنت,معالجة الصور المجمعة,إضافة العلامة المائية,ضغط الصور,JPEG إلى PNG,تحويل WEBP,أداة صور مجانية">
+    <meta name="author" content="أداة معالجة الصور">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yoursite.com/ar/">
+
+    <!-- دعم PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="أداة معالجة الصور">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+
+    <!-- أوراق الأنماط -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+
+<body>
+    <!-- شريط التنقل -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">أداة تحويل تنسيق الصور المجانية عبر الإنترنت</h1>
+            <div class="header-info">
+                <div class="language-switcher">
+                    <a href="index.html" class="lang-link">中文</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_en.html" class="lang-link">English</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_de.html" class="lang-link">Deutsch</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_fr.html" class="lang-link">Français</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ja.html" class="lang-link">日本語</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ko.html" class="lang-link">한국어</a>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-current">العربية</span>
+                </div>
+                <div class="status-info">مجاني | معالجة في المتصفح | حماية خصوصية البيانات</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="container">
+        <div class="header-description">
+            تدمج هذه الأداة تحويل تنسيق الصور والمعالجة المجمعة وإضافة العلامات المائية عبر الإنترنت وغيرها من الوظائف
+            العملية. لا حاجة لتحميل وتثبيت أي برنامج، استخدمها مباشرة في المتصفح، مما يجعل معالجة الصور بسيطة وسريعة.
+            سواء كنت مصممًا أو مصورًا أو مستخدمًا عاديًا، يمكنك العثور على الأدوات التي تحتاجها هنا.
+        </div>
+        <!-- منطقة المعالجة الرئيسية -->
+        <main class="main-content">
+            <!-- منطقة الرفع -->
+            <section class="upload-area">
+                <div class="upload-box" id="uploadBox">
+                    <div class="upload-icon">📁</div>
+                    <p class="upload-text">اسحب الملفات هنا أو اضغط للاختيار</p>
+                    <p class="upload-hint">يدعم اختيار ملفات متعددة، الحد الأقصى 100 ميجابايت</p>
+                    <input type="file" id="fileInput" multiple accept="image/*" class="file-input">
+                </div>
+            </section>
+
+            <!-- خيارات المعالجة -->
+            <section class="processing-options">
+                <div class="option-group">
+                    <h3>اختر عملية المعالجة</h3>
+                    <div class="option-tabs">
+                        <button class="tab-btn active" data-tab="format">تحويل التنسيق</button>
+                        <button class="tab-btn" data-tab="watermark">العلامة المائية</button>
+                        <button class="tab-btn" data-tab="transform">التحويل</button>
+                    </div>
+                </div>
+
+                <!-- خيارات تحويل التنسيق -->
+                <div class="tab-content active" data-tab="format">
+                    <div class="format-options">
+                        <h4>تنسيق الإخراج</h4>
+                        <div class="format-buttons">
+                            <button class="format-btn" data-format="jpeg">JPEG</button>
+                            <button class="format-btn" data-format="png">PNG</button>
+                            <button class="format-btn" data-format="webp">WEBP</button>
+                            <button class="format-btn" data-format="bmp">BMP</button>
+                        </div>
+
+                        <div class="quality-control">
+                            <label for="quality">جودة الصورة: <span id="qualityValue">80</span>%</label>
+                            <input type="range" id="quality" min="10" max="100" value="80">
+                            <small>كلما زادت الجودة، زاد حجم الملف</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- خيارات العلامة المائية -->
+                <div class="tab-content" data-tab="watermark">
+                    <div class="watermark-options">
+                        <div class="watermark-type">
+                            <h4>نوع العلامة المائية</h4>
+                            <div class="type-buttons">
+                                <button class="type-btn active" data-type="text">علامة مائية نصية</button>
+                                <button class="type-btn" data-type="image">علامة مائية للصورة</button>
+                            </div>
+                        </div>
+
+                        <!-- العلامة المائية النصية -->
+                        <div class="watermark-text active">
+                            <div class="input-group">
+                                <label for="watermarkText">نص العلامة المائية</label>
+                                <input type="text" id="watermarkText" placeholder="أدخل نص العلامة المائية">
+                            </div>
+
+                            <div class="style-controls">
+                                <div class="control-row">
+                                    <div class="control-group">
+                                        <label for="fontSize">حجم الخط</label>
+                                        <input type="range" id="fontSize" min="12" max="72" value="24">
+                                        <span id="fontSizeValue">24px</span>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="fontColor">لون الخط</label>
+                                        <input type="color" id="fontColor" value="#ffffff">
+                                    </div>
+                                </div>
+
+                                <div class="control-row">
+                                    <div class="control-group">
+                                        <label for="opacity">الشفافية</label>
+                                        <input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.5">
+                                        <span id="opacityValue">50%</span>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="position">الموقع</label>
+                                        <select id="position">
+                                            <option value="center">الوسط</option>
+                                            <option value="top-left">أعلى اليسار</option>
+                                            <option value="top-right">أعلى اليمين</option>
+                                            <option value="bottom-left">أسفل اليسار</option>
+                                            <option value="bottom-right">أسفل اليمين</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- علامة مائية للصورة -->
+                        <div class="watermark-image">
+                            <div class="input-group">
+                                <label for="watermarkFile">صورة العلامة المائية</label>
+                                <input type="file" id="watermarkFile" accept="image/*">
+                            </div>
+                            <div class="control-row">
+                                <div class="control-group">
+                                    <label for="watermarkOpacity">الشفافية</label>
+                                    <input type="range" id="watermarkOpacity" min="0.1" max="1" step="0.1" value="0.5">
+                                    <span id="watermarkOpacityValue">50%</span>
+                                </div>
+                                <div class="control-group">
+                                    <label for="watermarkPosition">الموقع</label>
+                                    <select id="watermarkPosition">
+                                        <option value="center">الوسط</option>
+                                        <option value="top-left">أعلى اليسار</option>
+                                        <option value="top-right">أعلى اليمين</option>
+                                        <option value="bottom-left">أسفل اليسار</option>
+                                        <option value="bottom-right">أسفل اليمين</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- خيارات التحويل -->
+                <div class="tab-content" data-tab="transform">
+                    <div class="transform-options">
+                        <h4>تحويل الصورة</h4>
+                        <div class="transform-buttons">
+                            <button class="transform-btn" data-transform="rotate-90">دوران 90°</button>
+                            <button class="transform-btn" data-transform="rotate-180">دوران 180°</button>
+                            <button class="transform-btn" data-transform="rotate-270">دوران 270°</button>
+                            <button class="transform-btn" data-transform="flip-horizontal">انعكاس أفقي</button>
+                            <button class="transform-btn" data-transform="flip-vertical">انعكاس عمودي</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار المعالجة -->
+                <div class="action-buttons">
+                    <button id="processBtn" class="process-btn" disabled>معالجة الصور</button>
+                    <button id="downloadAllBtn" class="download-all-btn" disabled>تحميل الكل</button>
+                </div>
+            </section>
+
+            <!-- شريط التقدم -->
+            <section class="progress-section" style="display: none;">
+                <h3>تقدم المعالجة</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">0 / 0 مكتمل</div>
+            </section>
+
+            <!-- معاينة النتائج -->
+            <section class="preview-section" style="display: none;">
+                <h3>نتائج المعالجة</h3>
+                <div class="preview-grid" id="previewGrid">
+                    <!-- عناصر المعاينة المولدة ديناميكيًا -->
+                </div>
+            </section>
+        </main>
+
+        <!-- دليل معرفة تنسيقات الصور -->
+        <section class="format-guide">
+            <h2>📚 دليل معرفة تنسيقات الصور</h2>
+
+            <div class="format-intro">
+                <p>لا تعرف أي تنسيق صورة تختار من بين التنسيقات المختلفة؟ تعرف على خصائص وسيناريوهات تطبيق كل تنسيق
+                    بالتفصيل!</p>
+            </div>
+
+            <div class="formats-overview">
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>JPEG</h3>
+                        <span class="format-tag">ضغط مع فقدان</span>
+                    </div>
+                    <div class="format-content">
+                        <p><strong>الخصائص:</strong> تنسيق الصور الأكثر شيوعًا، معدل ضغط ممتاز، حجم ملف صغير</p>
+                        <p><strong>سيناريوهات التطبيق:</strong> الصور، الصور ذات الألوان المعقدة، صفحات الويب</p>
+                        <p><strong>العيوب:</strong> لا يدعم الشفافية، ضغط مع فقدان، تدهور الجودة عند الحفظ المتكرر</p>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>PNG</h3>
+                        <span class="format-tag lossless">ضغط بلا فقدان</span>
+                    </div>
+                    <div class="format-content">
+                        <p><strong>الخصائص:</strong> ضغط بلا فقدان، دعم الشفافية، جودة عالية</p>
+                        <p><strong>سيناريوهات التطبيق:</strong> الشعارات، الأيقونات، الصور التي تحتاج خلفية شفافة</p>
+                        <p><strong>العيوب:</strong> حجم الملف كبير نسبيًا، غير فعال للصور المعقدة</p>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>WEBP</h3>
+                        <span class="format-tag modern">حديث</span>
+                    </div>
+                    <div class="format-content">
+                        <p><strong>الخصائص:</strong> تطوير Google، معدل ضغط ممتاز، دعم الشفافية والرسوم المتحركة</p>
+                        <p><strong>سيناريوهات التطبيق:</strong> صفحات الويب، تطبيقات الهاتف المحمول، عندما يكون توفير
+                            النطاق الترددي مهمًا</p>
+                        <p><strong>العيوب:</strong> غير مدعوم في بعض المتصفحات القديمة</p>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>BMP</h3>
+                        <span class="format-tag uncompressed">غير مضغوط</span>
+                    </div>
+                    <div class="format-content">
+                        <p><strong>الخصائص:</strong> تنسيق غير مضغوط، أعلى جودة، هيكل بسيط</p>
+                        <p><strong>سيناريوهات التطبيق:</strong> تحرير الصور، عندما تكون متطلبات الجودة عالية جدًا</p>
+                        <p><strong>العيوب:</strong> حجم الملف كبير جدًا، غير مناسب للاستخدام على الويب</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-comparison">
+                <h3>📊 جدول مقارنة التنسيقات</h3>
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التنسيق</th>
+                                <th>طريقة الضغط</th>
+                                <th>الشفافية</th>
+                                <th>الرسوم المتحركة</th>
+                                <th>حجم الملف</th>
+                                <th>الجودة</th>
+                                <th>دعم المتصفح</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JPEG</td>
+                                <td>مع فقدان</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>صغير</td>
+                                <td>جيد</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>PNG</td>
+                                <td>بلا فقدان</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                                <td>متوسط</td>
+                                <td>ممتاز</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>WEBP</td>
+                                <td>مع/بلا فقدان</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>صغير جدًا</td>
+                                <td>ممتاز</td>
+                                <td>95%+</td>
+                            </tr>
+                            <tr>
+                                <td>BMP</td>
+                                <td>غير مضغوط</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>كبير جدًا</td>
+                                <td>مثالي</td>
+                                <td>محدود</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="format-recommendations">
+                <h3>💡 توصيات الاختيار</h3>
+                <div class="recommendations-grid">
+                    <div class="recommendation-item">
+                        <h4>🌐 الاستخدام على الويب</h4>
+                        <p>يُنصح بـ WEBP > JPEG > PNG بهذا الترتيب. WEBP يوفر أفضل معدل ضغط، JPEG مناسب للصور، PNG مناسب
+                            للرسوميات التي تحتاج شفافية.</p>
+                    </div>
+                    <div class="recommendation-item">
+                        <h4>📱 تطبيقات الهاتف المحمول</h4>
+                        <p>حجم الملف مهم، لذا فكر في WEBP أولاً، واستخدم JPEG عند الحاجة للتوافق.</p>
+                    </div>
+                    <div class="recommendation-item">
+                        <h4>🎨 أعمال التصميم</h4>
+                        <p>استخدم PNG للشعارات أو الأيقونات التي تحتاج شفافية، JPEG للصور، BMP عندما تحتاج أعلى جودة.
+                        </p>
+                    </div>
+                    <div class="recommendation-item">
+                        <h4>📄 المستندات/الطباعة</h4>
+                        <p>للمطبوعات عالية الدقة، يُنصح بـ PNG أو BMP، للمستندات العادية JPEG.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 أداة تحويل تنسيق الصور المجانية عبر الإنترنت. جميع الحقوق محفوظة.</p>
+            <p>معالجة مباشرة في المتصفح، حماية كاملة لخصوصية البيانات</p>
+        </div>
+    </footer>
+
+    <!-- الجافا سكريبت -->
+    <script src="scripts/file-handler.js"></script>
+    <script src="scripts/image-processor.js"></script>
+    <script src="scripts/ui-components.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <!-- تسجيل PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function (registration) {
+                        console.log('تم تسجيل Service Worker بنجاح:', registration.scope);
+                    })
+                    .catch(function (error) {
+                        console.log('فشل تسجيل Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>

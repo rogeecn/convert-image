@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO最適化 -->
+    <title>無料オンライン画像フォーマット変換ツール - 画像フォーマット変換、透かし追加、バッチ処理</title>
+    <meta name="description"
+        content="無料のオンライン画像処理ツール、JPEG、PNG、WEBP、BMP フォーマット変換、バッチテキスト透かし、画像透かし、画像回転・反転をサポート。ソフトウェアのインストール不要、ブラウザで直接使用、オフライン操作をサポート。">
+    <meta name="keywords" content="画像フォーマット変換,オンライン画像処理,バッチ画像処理,透かし追加,画像圧縮,JPEG から PNG,WEBP 変換,無料画像ツール">
+    <meta name="author" content="画像処理ツール">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yoursite.com/ja/">
+
+    <!-- PWAサポート -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="画像処理ツール">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+
+<body>
+    <!-- ナビゲーションバー -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">無料オンライン画像フォーマット変換ツール</h1>
+            <div class="header-info">
+                <div class="language-switcher">
+                    <a href="index.html" class="lang-link">中文</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_en.html" class="lang-link">English</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_de.html" class="lang-link">Deutsch</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_fr.html" class="lang-link">Français</a>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-current">日本語</span>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ko.html" class="lang-link">한국어</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ar.html" class="lang-link">العربية</a>
+                </div>
+                <span id="imageCount">0 枚の画像</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="header-description">
+            このツールは画像フォーマット変換、バッチ処理、オンライン透かし追加などの実用的な機能を統合しています。ソフトウェアのダウンロードやインストールは不要、ブラウザで直接使用でき、画像処理を簡単で高速にします。デザイナー、フォトグラファー、一般ユーザーを問わず、ここでニーズに合うツールを見つけることができます。
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <!-- アップロードエリア -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <h3>画像をここにドラッグまたはクリックして選択</h3>
+                        <p>JPG、PNG、GIF、WEBP、BMP フォーマットをサポート</p>
+                        <button class="btn btn-primary" id="selectFilesBtn">画像を選択</button>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                </div>
+            </section>
+
+            <!-- ツールバー -->
+            <section class="toolbar" id="toolbar" style="display: none;">
+                <div class="toolbar-left">
+                    <button class="btn btn-secondary" id="selectAllBtn">すべて選択</button>
+                    <button class="btn btn-danger" id="deleteBtn">削除</button>
+                    <span class="separator">|</span>
+                    <button class="btn btn-secondary" id="rotateLeftBtn">↶ 左回転</button>
+                    <button class="btn btn-secondary" id="rotateRightBtn">↷ 右回転</button>
+                    <button class="btn btn-secondary" id="flipHBtn">⇄ 水平反転</button>
+                    <button class="btn btn-secondary" id="flipVBtn">⇅ 垂直反転</button>
+                    <button class="btn btn-secondary" id="resetBtn">↺ リセット</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-success" id="downloadBtn">📥 保存してダウンロード</button>
+                </div>
+            </section>
+
+            <!-- メインコンテンツエリア -->
+            <section class="content-area">
+                <!-- 画像グリッド -->
+                <div class="images-container">
+                    <div class="images-grid" id="imagesGrid">
+                        <!-- 動的に生成される画像アイテム -->
+                    </div>
+                </div>
+
+                <!-- サイド操作パネル -->
+                <aside class="side-panel" id="sidePanel">
+                    <div class="panel-header">
+                        <h3>コントロールパネル</h3>
+                        <span class="selected-count" id="selectedCount">画像が選択されていません</span>
+                    </div>
+
+                    <!-- フォーマット変換 -->
+                    <div class="panel-section">
+                        <h4>🔄 フォーマット変換</h4>
+                        <div class="format-controls">
+                            <label>ターゲットフォーマット:</label>
+                            <select id="targetFormat">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WEBP</option>
+                                <option value="bmp">BMP</option>
+                            </select>
+
+                            <div class="quality-control" id="qualityControl">
+                                <label>品質: <span id="qualityValue">90</span>%</label>
+                                <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="convertBtn">フォーマット変換</button>
+                        </div>
+                    </div>
+
+                    <!-- 透かし設定 -->
+                    <div class="panel-section">
+                        <h4>🏷️ 透かし設定</h4>
+                        <div class="watermark-controls">
+                            <div class="watermark-type">
+                                <label>
+                                    <input type="radio" name="watermarkType" value="text" checked> テキスト透かし
+                                </label>
+                                <label>
+                                    <input type="radio" name="watermarkType" value="image"> 画像透かし
+                                </label>
+                            </div>
+
+                            <!-- テキスト透かし設定 -->
+                            <div class="text-watermark" id="textWatermark">
+                                <input type="text" id="watermarkText" placeholder="透かしテキストを入力" value="サンプル透かし">
+
+                                <div class="watermark-style">
+                                    <label>フォントサイズ:</label>
+                                    <input type="range" id="fontSize" min="12" max="72" value="24">
+                                    <span id="fontSizeValue">24px</span>
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>色:</label>
+                                    <input type="color" id="fontColor" value="#ff8200">
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>透明度:</label>
+                                    <input type="range" id="watermarkOpacity" min="0" max="100" value="80">
+                                    <span id="opacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- 画像透かし設定 -->
+                            <div class="image-watermark" id="imageWatermark" style="display: none;">
+                                <input type="file" id="watermarkImageInput" accept="image/*">
+                                <div class="watermark-style">
+                                    <label>透明度:</label>
+                                    <input type="range" id="watermarkImageOpacity" min="0" max="100" value="80">
+                                    <span id="imageOpacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- 位置選択 -->
+                            <div class="position-grid">
+                                <label>位置:</label>
+                                <div class="position-selector">
+                                    <button class="position-btn" data-position="top-left">↖</button>
+                                    <button class="position-btn" data-position="top-center">↑</button>
+                                    <button class="position-btn" data-position="top-right">↗</button>
+                                    <button class="position-btn" data-position="middle-left">←</button>
+                                    <button class="position-btn active" data-position="center">●</button>
+                                    <button class="position-btn" data-position="middle-right">→</button>
+                                    <button class="position-btn" data-position="bottom-left">↙</button>
+                                    <button class="position-btn" data-position="bottom-center">↓</button>
+                                    <button class="position-btn" data-position="bottom-right">↘</button>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="applyWatermarkBtn">透かしを適用</button>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <!-- 画像フォーマット知識ガイド -->
+    <section class="format-guide">
+        <div class="container">
+            <h2>📚 画像フォーマット知識ガイド</h2>
+            <p class="guide-intro">さまざまな画像フォーマットの特性を理解し、ニーズに最適なフォーマットを選択してください</p>
+
+            <div class="format-grid">
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>JPEG</h3>
+                        <span class="format-badge jpeg">非可逆圧縮</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">最も一般的に使用される画像フォーマット、写真や複雑な画像に適している</p>
+                        <ul class="format-features">
+                            <li>✅ ファイルサイズが小さく、圧縮効率が高い</li>
+                            <li>✅ 数百万色をサポート</li>
+                            <li>✅ 優れた互換性、すべてのデバイスでサポート</li>
+                            <li>❌ 透明背景をサポートしない</li>
+                            <li>❌ 非可逆圧縮、複数回の編集で品質が低下</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>使用例:</strong> 写真共有、ウェブ画像、ソーシャルメディア
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>PNG</h3>
+                        <span class="format-badge png">可逆圧縮</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">透明背景をサポートする高品質画像フォーマット</p>
+                        <ul class="format-features">
+                            <li>✅ 可逆圧縮、元の品質を維持</li>
+                            <li>✅ 透明・半透明効果をサポート</li>
+                            <li>✅ アイコン、ロゴ、シンプルなグラフィックに最適</li>
+                            <li>❌ ファイルサイズが大きい</li>
+                            <li>❌ 複雑な写真には不向き</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>使用例:</strong> ウェブサイトアイコン、ロゴデザイン、透明性が必要な画像
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>WEBP</h3>
+                        <span class="format-badge webp">モダンフォーマット</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Googleが開発したモダンな画像フォーマット、品質とサイズのバランスが良い</p>
+                        <ul class="format-features">
+                            <li>✅ 同じ品質でJPEGより25-35%小さい</li>
+                            <li>✅ 可逆・非可逆圧縮の両方をサポート</li>
+                            <li>✅ 透明性とアニメーションをサポート</li>
+                            <li>❌ 一部の古いブラウザではサポートされない</li>
+                            <li>❌ 編集ソフトウェアのサポートが限定的</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>使用例:</strong> モダンなウェブサイト、モバイルアプリ、ウェブ最適化
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>BMP</h3>
+                        <span class="format-badge bmp">非圧縮</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Windowsネイティブフォーマット、非圧縮ビットマップファイル</p>
+                        <ul class="format-features">
+                            <li>✅ 可逆品質、完全に忠実</li>
+                            <li>✅ シンプルな構造、良好な互換性</li>
+                            <li>✅ 複数の色深度をサポート</li>
+                            <li>❌ ファイルサイズが非常に大きい</li>
+                            <li>❌ 透明背景をサポートしない</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>使用例:</strong> 画像処理中間フォーマット、システムアイコン、特殊用途
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>GIF</h3>
+                        <span class="format-badge gif">アニメーションサポート</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">アニメーションサポートのある画像フォーマット、ウェブミームに最適</p>
+                        <ul class="format-features">
+                            <li>✅ アニメーション効果をサポート</li>
+                            <li>✅ 透明背景をサポート</li>
+                            <li>✅ 優れた互換性</li>
+                            <li>❌ 256色のみサポート</li>
+                            <li>❌ 写真や複雑な画像には不向き</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>使用例:</strong> アニメーションミーム、シンプルなアニメーション、ウェブ装飾
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 画像プレビューモーダル -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="previewTitle">画像プレビュー</h3>
+                <button class="modal-close" id="closePreview">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="previewImage" src="" alt="プレビュー画像">
+                <div class="image-info" id="imageInfo">
+                    <p><strong>ファイル名:</strong> <span id="infoName">-</span></p>
+                    <p><strong>寸法:</strong> <span id="infoDimensions">-</span></p>
+                    <p><strong>サイズ:</strong> <span id="infoSize">-</span></p>
+                    <p><strong>フォーマット:</strong> <span id="infoFormat">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- プログレスバー -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-modal">
+            <h3>処理中...</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">画像 1/10 を処理中</p>
+        </div>
+    </div>
+
+    <!-- PWAインストールプロンプト -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-content">
+            <div class="install-icon">📱</div>
+            <div class="install-text">
+                <h4>アプリとしてインストール</h4>
+                <p>画像処理ツールをデバイスにインストールして、オフライン使用体験をお楽しみください</p>
+            </div>
+            <div class="install-actions">
+                <button class="btn btn-primary" id="installBtn">インストール</button>
+                <button class="btn btn-secondary" id="dismissBtn">今はしない</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA更新プロンプト -->
+    <div class="update-prompt" id="updatePrompt">
+        <div class="update-content">
+            <div class="update-icon">🔄</div>
+            <div class="update-text">
+                <h4>新しいバージョンが利用可能</h4>
+                <p>新機能が利用可能です。今すぐ更新しますか？</p>
+            </div>
+            <div class="update-actions">
+                <button class="btn btn-primary" id="updateBtn">更新</button>
+                <button class="btn btn-secondary" id="laterBtn">後で</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JSZipライブラリをロード -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- PWAとService Worker初期化 -->
+    <script>
+        // 日本語テキスト設定
+        window.TEXT_CONFIG = {
+            APP_INITIALIZED: '画像処理ツールが初期化されました',
+            FILE_PROCESSING: 'ファイルを処理中...',
+            FILE_PROCESS_FAILED: 'ファイル処理に失敗しました',
+            FILE_NAME_INVALID: '無効なファイル名',
+            FILE_READ_FAILED: 'ファイルの読み取りに失敗しました',
+            IMAGE_LOAD_FAILED: '画像の読み込みに失敗しました',
+            IMAGE_SIZE_READ_FAILED: '画像サイズ情報を読み取れません',
+            IMAGE_COMPRESS_FAILED: '画像圧縮に失敗しました',
+            UNSUPPORTED_IMAGE_TYPE: 'サポートされていない画像ソースタイプ',
+            CANVAS_NOT_INITIALIZED: 'Canvasが初期化されていません',
+            FORMAT_CONVERT_FAILED: 'フォーマット変換に失敗しました',
+            ROTATING_IMAGE: '画像を回転中...',
+            ROTATE_FAILED: '回転に失敗しました',
+            FLIPPING_IMAGE: '画像を反転中...',
+            FLIP_FAILED: '反転に失敗しました',
+            RESETTING_IMAGE: '画像をリセット中...',
+            RESET_FAILED: 'リセットに失敗しました',
+            CONVERTING_FORMAT: 'フォーマットを変換中...',
+            FORMAT_CONVERT_ERROR: 'フォーマット変換に失敗しました',
+            SELECT_IMAGES_TO_CONVERT: '変換する画像を最初に選択してください',
+            ADDING_WATERMARK: '透かしを追加中...',
+            WATERMARK_FAILED: '透かしの追加に失敗しました',
+            WATERMARK_IMAGE_LOADED: '透かし画像が読み込まれました',
+            WATERMARK_IMAGE_LOAD_FAILED: '透かし画像の読み込みに失敗しました',
+            WATERMARK_IMAGE_PROCESS_FAILED: '透かし画像の処理に失敗しました',
+            SELECT_IMAGES_FOR_WATERMARK: '透かし用の画像を最初に選択してください',
+            SET_WATERMARK_CONTENT: '透かしの内容を設定してください',
+            PREPARING_DOWNLOAD: 'ダウンロードを準備中...',
+            PACKING_FILES: 'ファイルをパッキング中...',
+            DOWNLOAD_FAILED: 'ダウンロードに失敗しました',
+            JSZIP_NOT_LOADED: 'JSZipライブラリが読み込まれていません',
+            ZIP_GENERATE_FAILED: 'ZIPファイルの生成に失敗しました',
+            MODAL_WINDOW: 'モーダルウィンドウ',
+            DELETE_IMAGE: '画像を削除',
+            SELECT_ALL: 'すべて選択',
+            DESELECT_ALL: 'すべて選択解除',
+            NO_IMAGES_SELECTED: '画像が選択されていません',
+            CONFIRM_DELETE_SINGLE: 'この画像を削除してもよろしいですか？',
+            CONFIRM_DELETE_MULTIPLE: 'これらの{count}枚の画像を削除してもよろしいですか？',
+            DRAG_FILES_HERE: 'ファイルをここにドラッグ',
+            IMAGE_PREVIEW: '画像プレビュー',
+            OFFLINE_MODE: '📡 オフラインモード - 一部機能が制限されています',
+            NETWORK_RESTORED: 'ネットワーク接続が復旧しました',
+            NETWORK_DISCONNECTED: 'ネットワーク接続が失われました',
+            LAYOUT_UPDATED: 'レイアウトが更新されました',
+            PWA_INSTALL_SUCCESS: 'PWAインストール成功',
+            APP_INSTALL_SUCCESS: 'アプリが正常にインストールされました！ホーム画面から直接アクセスできます。',
+            USER_ACCEPTED_INSTALL: 'ユーザーがインストールプロンプトを受け入れました',
+            USER_REJECTED_INSTALL: 'ユーザーがインストールプロンプトを拒否しました',
+            GLOBAL_ERROR: 'グローバルエラー',
+            APP_ERROR_REFRESH: 'アプリエラーが発生しました。ページを更新して再試行してください',
+            ALL_MANAGERS_INITIALIZED: 'すべてのマネージャーが初期化されました',
+            PAGE_LOAD_PERFORMANCE: 'ページ読み込みパフォーマンスデータ',
+            HIGH_MEMORY_USAGE: 'メモリ使用量が多い',
+            UNSUPPORTED_FILE_FORMAT: 'サポートされていないファイル形式: {type}。サポートされている形式: JPG, PNG, GIF, WEBP, BMP',
+            FILE_TOO_LARGE: 'ファイルが大きすぎます: {size}MB。最大サポート: {maxSize}MB',
+            FILE_PROCESS_ERROR: 'ファイル {name} の処理に失敗しました',
+            SUCCESS_ADD_IMAGES: '{count}枚の画像を正常に追加しました',
+            SUCCESS_DELETE_IMAGES: '{count}枚の画像を削除しました',
+            SUCCESS_ROTATE_IMAGES: '{count}枚の画像を回転しました',
+            SUCCESS_FLIP_IMAGES: '{count}枚の画像を反転しました',
+            SUCCESS_RESET_IMAGES: '{count}枚の画像をリセットしました',
+            SUCCESS_CONVERT_IMAGES: '{count}枚の画像を{format}形式に変換しました',
+            SUCCESS_ADD_WATERMARK: '{count}枚の画像に透かしを追加しました',
+            SUCCESS_DOWNLOAD_IMAGES: '{count}枚の画像をダウンロードしました',
+            IMAGE_COUNT: '{count}枚の画像',
+            SELECTED_COUNT: '{selected}/{total}枚の画像を選択',
+            PROCESSING: '処理中...',
+            PROCESSING_GENERIC: '処理中...',
+            PROGRESS_PERCENT: '進行状況: {percent}%'
+        };
+
+        // Service Worker登録
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW登録成功:', registration);
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdatePrompt();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('SW登録失敗:', error);
+                    });
+            });
+        }
+
+        // PWAインストールプロンプト
+        let deferredPrompt;
+        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            if (!installPromptShown) {
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 3000);
+            }
+        });
+
+        function showInstallPrompt() {
+            const installPrompt = document.getElementById('installPrompt');
+            if (installPrompt) {
+                installPrompt.style.display = 'flex';
+            }
+        }
+
+        function showUpdatePrompt() {
+            const updatePrompt = document.getElementById('updatePrompt');
+            if (updatePrompt) {
+                updatePrompt.style.display = 'flex';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.getElementById('installBtn');
+            const dismissBtn = document.getElementById('dismissBtn');
+            const installPrompt = document.getElementById('installPrompt');
+
+            if (installBtn) {
+                installBtn.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('ユーザーがインストールを承認しました');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            if (dismissBtn) {
+                dismissBtn.addEventListener('click', () => {
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            const updateBtn = document.getElementById('updateBtn');
+            const laterBtn = document.getElementById('laterBtn');
+            const updatePrompt = document.getElementById('updatePrompt');
+
+            if (updateBtn) {
+                updateBtn.addEventListener('click', () => {
+                    if (navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                    window.location.reload();
+                });
+            }
+
+            if (laterBtn) {
+                laterBtn.addEventListener('click', () => {
+                    updatePrompt.style.display = 'none';
+                });
+            }
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWAインストール成功');
+        });
+    </script>
+
+    <!-- プロジェクトスクリプトをロード -->
+    <script src="scripts/image-processor.js"></script>
+    <script src="scripts/file-handler.js"></script>
+    <script src="scripts/ui-components.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>

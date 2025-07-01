@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Optimisation SEO -->
+    <title>Convertisseur de Format d'Image Gratuit en Ligne - Conversion de Format d'Image, Ajout de Filigrane,
+        Traitement par Lot</title>
+    <meta name="description"
+        content="Outil de traitement d'image en ligne gratuit, prend en charge la conversion de format JPEG, PNG, WEBP, BMP, filigrane de texte par lot, filigrane d'image, rotation et retournement d'image. Aucune installation de logiciel requise, utilisation directe dans le navigateur, prend en charge le fonctionnement hors ligne.">
+    <meta name="keywords"
+        content="conversion de format d'image,traitement d'image en ligne,traitement d'image par lot,ajouter filigrane,compression d'image,JPEG vers PNG,conversion WEBP,outil d'image gratuit">
+    <meta name="author" content="Outil de Traitement d'Image">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yoursite.com/fr/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yoursite.com/fr/">
+    <meta property="og:title"
+        content="Convertisseur de Format d'Image Gratuit en Ligne - Conversion de Format d'Image, Ajout de Filigrane">
+    <meta property="og:description"
+        content="Outil de traitement d'image en ligne gratuit, prend en charge plusieurs conversions de format et traitement par lot, aucune installation de logiciel requise.">
+    <meta property="og:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yoursite.com/fr/">
+    <meta property="twitter:title"
+        content="Convertisseur de Format d'Image Gratuit en Ligne - Conversion de Format d'Image, Ajout de Filigrane">
+    <meta property="twitter:description"
+        content="Outil de traitement d'image en ligne gratuit, prend en charge plusieurs conversions de format et traitement par lot, aucune installation de logiciel requise.">
+    <meta property="twitter:image" content="https://yoursite.com/assets/icons/icon-512x512.png">
+
+    <!-- Support PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Outil de Traitement d'Image">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+
+<body>
+    <!-- Barre de navigation -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Convertisseur de Format d'Image Gratuit en Ligne</h1>
+            <div class="header-info">
+                <div class="language-switcher">
+                    <a href="index.html" class="lang-link">中文</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_en.html" class="lang-link">English</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_de.html" class="lang-link">Deutsch</a>
+                    <span class="lang-separator">|</span>
+                    <span class="lang-current">Français</span>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ja.html" class="lang-link">日本語</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ko.html" class="lang-link">한국어</a>
+                    <span class="lang-separator">|</span>
+                    <a href="index_ar.html" class="lang-link">العربية</a>
+                </div>
+                <span id="imageCount">0 images</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="header-description">
+            Cet outil intègre la conversion de format d'image, le traitement par lot, l'ajout de filigrane en ligne et
+            d'autres fonctions pratiques. Aucune installation de logiciel nécessaire, utilisation directe dans le
+            navigateur, rend le traitement d'image simple et rapide. Que vous soyez designer, photographe ou utilisateur
+            ordinaire, vous pouvez trouver ici des outils répondant à vos besoins.
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <!-- Zone de téléchargement -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <h3>Glissez les images ici ou cliquez pour sélectionner</h3>
+                        <p>Prend en charge les formats JPG, PNG, GIF, WEBP, BMP</p>
+                        <button class="btn btn-primary" id="selectFilesBtn">Sélectionner les images</button>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                </div>
+            </section>
+
+            <!-- Barre d'outils -->
+            <section class="toolbar" id="toolbar" style="display: none;">
+                <div class="toolbar-left">
+                    <button class="btn btn-secondary" id="selectAllBtn">Tout sélectionner</button>
+                    <button class="btn btn-danger" id="deleteBtn">Supprimer</button>
+                    <span class="separator">|</span>
+                    <button class="btn btn-secondary" id="rotateLeftBtn">↶ Rotation gauche</button>
+                    <button class="btn btn-secondary" id="rotateRightBtn">↷ Rotation droite</button>
+                    <button class="btn btn-secondary" id="flipHBtn">⇄ Retournement horizontal</button>
+                    <button class="btn btn-secondary" id="flipVBtn">⇅ Retournement vertical</button>
+                    <button class="btn btn-secondary" id="resetBtn">↺ Réinitialiser</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-success" id="downloadBtn">📥 Enregistrer et télécharger</button>
+                </div>
+            </section>
+
+            <!-- Zone de contenu principal -->
+            <section class="content-area">
+                <!-- Grille d'images -->
+                <div class="images-container">
+                    <div class="images-grid" id="imagesGrid">
+                        <!-- Éléments d'image générés dynamiquement -->
+                    </div>
+                </div>
+
+                <!-- Panneau d'opération latéral -->
+                <aside class="side-panel" id="sidePanel">
+                    <div class="panel-header">
+                        <h3>Panneau de contrôle</h3>
+                        <span class="selected-count" id="selectedCount">Aucune image sélectionnée</span>
+                    </div>
+
+                    <!-- Conversion de format -->
+                    <div class="panel-section">
+                        <h4>🔄 Conversion de format</h4>
+                        <div class="format-controls">
+                            <label>Format cible :</label>
+                            <select id="targetFormat">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WEBP</option>
+                                <option value="bmp">BMP</option>
+                            </select>
+
+                            <div class="quality-control" id="qualityControl">
+                                <label>Qualité : <span id="qualityValue">90</span>%</label>
+                                <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="convertBtn">Convertir le format</button>
+                        </div>
+                    </div>
+
+                    <!-- Paramètres de filigrane -->
+                    <div class="panel-section">
+                        <h4>🏷️ Paramètres de filigrane</h4>
+                        <div class="watermark-controls">
+                            <div class="watermark-type">
+                                <label>
+                                    <input type="radio" name="watermarkType" value="text" checked> Filigrane de texte
+                                </label>
+                                <label>
+                                    <input type="radio" name="watermarkType" value="image"> Filigrane d'image
+                                </label>
+                            </div>
+
+                            <!-- Paramètres de filigrane de texte -->
+                            <div class="text-watermark" id="textWatermark">
+                                <input type="text" id="watermarkText" placeholder="Entrez le texte du filigrane"
+                                    value="Exemple de filigrane">
+
+                                <div class="watermark-style">
+                                    <label>Taille de police :</label>
+                                    <input type="range" id="fontSize" min="12" max="72" value="24">
+                                    <span id="fontSizeValue">24px</span>
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>Couleur :</label>
+                                    <input type="color" id="fontColor" value="#ff8200">
+                                </div>
+
+                                <div class="watermark-style">
+                                    <label>Opacité :</label>
+                                    <input type="range" id="watermarkOpacity" min="0" max="100" value="80">
+                                    <span id="opacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- Paramètres de filigrane d'image -->
+                            <div class="image-watermark" id="imageWatermark" style="display: none;">
+                                <input type="file" id="watermarkImageInput" accept="image/*">
+                                <div class="watermark-style">
+                                    <label>Opacité :</label>
+                                    <input type="range" id="watermarkImageOpacity" min="0" max="100" value="80">
+                                    <span id="imageOpacityValue">80%</span>
+                                </div>
+                            </div>
+
+                            <!-- Sélection de position -->
+                            <div class="position-grid">
+                                <label>Position :</label>
+                                <div class="position-selector">
+                                    <button class="position-btn" data-position="top-left">↖</button>
+                                    <button class="position-btn" data-position="top-center">↑</button>
+                                    <button class="position-btn" data-position="top-right">↗</button>
+                                    <button class="position-btn" data-position="middle-left">←</button>
+                                    <button class="position-btn active" data-position="center">●</button>
+                                    <button class="position-btn" data-position="middle-right">→</button>
+                                    <button class="position-btn" data-position="bottom-left">↙</button>
+                                    <button class="position-btn" data-position="bottom-center">↓</button>
+                                    <button class="position-btn" data-position="bottom-right">↘</button>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-full" id="applyWatermarkBtn">Appliquer le
+                                filigrane</button>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <!-- Guide des connaissances sur les formats d'image -->
+    <section class="format-guide">
+        <div class="container">
+            <h2>📚 Guide des connaissances sur les formats d'image</h2>
+            <p class="guide-intro">Comprenez les caractéristiques des différents formats d'image et choisissez le format
+                qui convient le mieux à vos besoins</p>
+
+            <div class="format-grid">
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>JPEG</h3>
+                        <span class="format-badge jpeg">Compression avec perte</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Format d'image le plus couramment utilisé, adapté aux photos et
+                            images complexes</p>
+                        <ul class="format-features">
+                            <li>✅ Petite taille de fichier, haute efficacité de compression</li>
+                            <li>✅ Prend en charge des millions de couleurs</li>
+                            <li>✅ Excellente compatibilité, pris en charge par tous les appareils</li>
+                            <li>❌ Pas de support d'arrière-plan transparent</li>
+                            <li>❌ Compression avec perte, la qualité se dégrade avec plusieurs éditions</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>Cas d'utilisation :</strong> Partage de photos, images web, réseaux sociaux
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>PNG</h3>
+                        <span class="format-badge png">Compression sans perte</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Format d'image de haute qualité avec support d'arrière-plan
+                            transparent</p>
+                        <ul class="format-features">
+                            <li>✅ Compression sans perte, maintient la qualité originale</li>
+                            <li>✅ Prend en charge les effets transparents et semi-transparents</li>
+                            <li>✅ Idéal pour les icônes, logos et graphiques simples</li>
+                            <li>❌ Taille de fichier plus importante</li>
+                            <li>❌ Pas adapté aux photos complexes</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>Cas d'utilisation :</strong> Icônes de site web, conception de logos, images
+                            nécessitant une transparence
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>WEBP</h3>
+                        <span class="format-badge webp">Format moderne</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Format d'image moderne développé par Google, équilibrant qualité
+                            et taille</p>
+                        <ul class="format-features">
+                            <li>✅ 25-35% plus petit que JPEG avec la même qualité</li>
+                            <li>✅ Prend en charge la compression avec et sans perte</li>
+                            <li>✅ Prend en charge la transparence et l'animation</li>
+                            <li>❌ Pas pris en charge par certains navigateurs plus anciens</li>
+                            <li>❌ Support limité des logiciels d'édition</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>Cas d'utilisation :</strong> Sites web modernes, applications mobiles, optimisation
+                            web
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>BMP</h3>
+                        <span class="format-badge bmp">Non compressé</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Format natif Windows, fichier bitmap non compressé</p>
+                        <ul class="format-features">
+                            <li>✅ Qualité sans perte, complètement fidèle</li>
+                            <li>✅ Structure simple, bonne compatibilité</li>
+                            <li>✅ Prend en charge plusieurs profondeurs de couleur</li>
+                            <li>❌ Taille de fichier extrêmement importante</li>
+                            <li>❌ Pas de support d'arrière-plan transparent</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>Cas d'utilisation :</strong> Format intermédiaire de traitement d'image, icônes
+                            système, usages spéciaux
+                        </div>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <h3>GIF</h3>
+                        <span class="format-badge gif">Support d'animation</span>
+                    </div>
+                    <div class="format-content">
+                        <p class="format-description">Format d'image avec support d'animation, préféré pour les mèmes
+                            web</p>
+                        <ul class="format-features">
+                            <li>✅ Prend en charge les effets d'animation</li>
+                            <li>✅ Prend en charge l'arrière-plan transparent</li>
+                            <li>✅ Excellente compatibilité</li>
+                            <li>❌ Prend en charge seulement 256 couleurs</li>
+                            <li>❌ Pas adapté aux photos et images complexes</li>
+                        </ul>
+                        <div class="format-use-case">
+                            <strong>Cas d'utilisation :</strong> Mèmes animés, animations simples, décorations web
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-comparison">
+                <h3>📊 Tableau de comparaison des formats</h3>
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Format</th>
+                                <th>Type de compression</th>
+                                <th>Transparence</th>
+                                <th>Support d'animation</th>
+                                <th>Taille de fichier</th>
+                                <th>Support navigateur</th>
+                                <th>Cas d'utilisation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>JPEG</strong></td>
+                                <td>Avec perte</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>Petit</td>
+                                <td>100%</td>
+                                <td>Photos, images complexes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PNG</strong></td>
+                                <td>Sans perte</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                                <td>Important</td>
+                                <td>100%</td>
+                                <td>Icônes, logos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WEBP</strong></td>
+                                <td>Avec/Sans perte</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>Très petit</td>
+                                <td>95%+</td>
+                                <td>Sites web modernes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BMP</strong></td>
+                                <td>Non compressé</td>
+                                <td>❌</td>
+                                <td>❌</td>
+                                <td>Extrêmement important</td>
+                                <td>100%</td>
+                                <td>Usage professionnel</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GIF</strong></td>
+                                <td>Sans perte</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>Moyen</td>
+                                <td>100%</td>
+                                <td>Animations, mèmes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="format-tips">
+                <h3>💡 Recommandations de sélection</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>📱 Partage sur les réseaux sociaux</h4>
+                        <p>Recommandé d'utiliser le format <strong>JPEG</strong>, petite taille de fichier, chargement
+                            rapide, répond aux exigences de la plupart des plateformes</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🎨 Portfolio de design</h4>
+                        <p>Recommandé d'utiliser le format <strong>PNG</strong>, maintient la meilleure qualité, prend
+                            en charge l'arrière-plan transparent</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>🌐 Optimisation de site web</h4>
+                        <p>Recommandé d'utiliser le format <strong>WEBP</strong>, réduit considérablement la taille du
+                            fichier tout en garantissant la qualité</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>😄 Créer des mèmes</h4>
+                        <p>Recommandé d'utiliser le format <strong>GIF</strong>, prend en charge les effets d'animation,
+                            bonne compatibilité</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de prévisualisation d'image -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="previewTitle">Aperçu de l'image</h3>
+                <button class="modal-close" id="closePreview">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="previewImage" src="" alt="Image d'aperçu">
+                <div class="image-info" id="imageInfo">
+                    <p><strong>Nom de fichier :</strong> <span id="infoName">-</span></p>
+                    <p><strong>Dimensions :</strong> <span id="infoDimensions">-</span></p>
+                    <p><strong>Taille :</strong> <span id="infoSize">-</span></p>
+                    <p><strong>Format :</strong> <span id="infoFormat">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre de progression -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-modal">
+            <h3>Traitement en cours...</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">Traitement de l'image 1/10</p>
+        </div>
+    </div>
+
+    <!-- Invite d'installation PWA -->
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-content">
+            <div class="install-icon">📱</div>
+            <div class="install-text">
+                <h4>Installer comme application</h4>
+                <p>Installez l'outil de traitement d'image sur votre appareil pour une expérience d'utilisation hors
+                    ligne</p>
+            </div>
+            <div class="install-actions">
+                <button class="btn btn-primary" id="installBtn">Installer</button>
+                <button class="btn btn-secondary" id="dismissBtn">Pas maintenant</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invite de mise à jour PWA -->
+    <div class="update-prompt" id="updatePrompt">
+        <div class="update-content">
+            <div class="update-icon">🔄</div>
+            <div class="update-text">
+                <h4>Nouvelle version disponible</h4>
+                <p>De nouvelles fonctionnalités sont disponibles, mettre à jour maintenant ?</p>
+            </div>
+            <div class="update-actions">
+                <button class="btn btn-primary" id="updateBtn">Mettre à jour</button>
+                <button class="btn btn-secondary" id="laterBtn">Plus tard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charger la bibliothèque JSZip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- Initialisation PWA et Service Worker -->
+    <script>
+        // Configuration de texte français
+        window.TEXT_CONFIG = {
+            APP_INITIALIZED: 'Outil de traitement d\'image initialisé',
+            FILE_PROCESSING: 'Traitement du fichier...',
+            FILE_PROCESS_FAILED: 'Échec du traitement du fichier',
+            FILE_NAME_INVALID: 'Nom de fichier invalide',
+            FILE_READ_FAILED: 'Échec de lecture du fichier',
+            IMAGE_LOAD_FAILED: 'Échec du chargement de l\'image',
+            IMAGE_SIZE_READ_FAILED: 'Impossible de lire les informations de taille d\'image',
+            IMAGE_COMPRESS_FAILED: 'Échec de la compression d\'image',
+            UNSUPPORTED_IMAGE_TYPE: 'Type de source d\'image non pris en charge',
+            CANVAS_NOT_INITIALIZED: 'Canvas non initialisé',
+            FORMAT_CONVERT_FAILED: 'Échec de la conversion de format',
+            ROTATING_IMAGE: 'Rotation de l\'image...',
+            ROTATE_FAILED: 'Échec de la rotation',
+            FLIPPING_IMAGE: 'Retournement de l\'image...',
+            FLIP_FAILED: 'Échec du retournement',
+            RESETTING_IMAGE: 'Réinitialisation de l\'image...',
+            RESET_FAILED: 'Échec de la réinitialisation',
+            CONVERTING_FORMAT: 'Conversion du format...',
+            FORMAT_CONVERT_ERROR: 'Échec de la conversion de format',
+            SELECT_IMAGES_TO_CONVERT: 'Veuillez d\'abord sélectionner les images à convertir',
+            ADDING_WATERMARK: 'Ajout du filigrane...',
+            WATERMARK_FAILED: 'Échec de l\'ajout du filigrane',
+            WATERMARK_IMAGE_LOADED: 'Image de filigrane chargée',
+            WATERMARK_IMAGE_LOAD_FAILED: 'Échec du chargement de l\'image de filigrane',
+            WATERMARK_IMAGE_PROCESS_FAILED: 'Échec du traitement de l\'image de filigrane',
+            SELECT_IMAGES_FOR_WATERMARK: 'Veuillez d\'abord sélectionner les images pour le filigrane',
+            SET_WATERMARK_CONTENT: 'Veuillez définir le contenu du filigrane',
+            PREPARING_DOWNLOAD: 'Préparation du téléchargement...',
+            PACKING_FILES: 'Empaquetage des fichiers...',
+            DOWNLOAD_FAILED: 'Échec du téléchargement',
+            JSZIP_NOT_LOADED: 'Bibliothèque JSZip non chargée',
+            ZIP_GENERATE_FAILED: 'Échec de la génération du fichier ZIP',
+            MODAL_WINDOW: 'Fenêtre modale',
+            DELETE_IMAGE: 'Supprimer l\'image',
+            SELECT_ALL: 'Tout sélectionner',
+            DESELECT_ALL: 'Tout désélectionner',
+            NO_IMAGES_SELECTED: 'Aucune image sélectionnée',
+            CONFIRM_DELETE_SINGLE: 'Êtes-vous sûr de vouloir supprimer cette image ?',
+            CONFIRM_DELETE_MULTIPLE: 'Êtes-vous sûr de vouloir supprimer ces {count} images ?',
+            DRAG_FILES_HERE: 'Glissez les fichiers ici',
+            IMAGE_PREVIEW: 'Aperçu de l\'image',
+            OFFLINE_MODE: '📡 Mode hors ligne - Certaines fonctionnalités limitées',
+            NETWORK_RESTORED: 'Connexion réseau restaurée',
+            NETWORK_DISCONNECTED: 'Connexion réseau perdue',
+            LAYOUT_UPDATED: 'Mise en page mise à jour',
+            PWA_INSTALL_SUCCESS: 'Installation PWA réussie',
+            APP_INSTALL_SUCCESS: 'Application installée avec succès ! Vous pouvez maintenant y accéder directement depuis l\'écran d\'accueil.',
+            USER_ACCEPTED_INSTALL: 'L\'utilisateur a accepté l\'invite d\'installation',
+            USER_REJECTED_INSTALL: 'L\'utilisateur a rejeté l\'invite d\'installation',
+            GLOBAL_ERROR: 'Erreur globale',
+            APP_ERROR_REFRESH: 'Erreur de l\'application, veuillez actualiser la page et réessayer',
+            ALL_MANAGERS_INITIALIZED: 'Tous les gestionnaires initialisés',
+            PAGE_LOAD_PERFORMANCE: 'Données de performance de chargement de page',
+            HIGH_MEMORY_USAGE: 'Utilisation mémoire élevée',
+            UNSUPPORTED_FILE_FORMAT: 'Format de fichier non pris en charge : {type}. Formats pris en charge : JPG, PNG, GIF, WEBP, BMP',
+            FILE_TOO_LARGE: 'Fichier trop volumineux : {size}MB. Maximum pris en charge : {maxSize}MB',
+            FILE_PROCESS_ERROR: 'Échec du traitement du fichier {name}',
+            SUCCESS_ADD_IMAGES: '{count} images ajoutées avec succès',
+            SUCCESS_DELETE_IMAGES: '{count} images supprimées',
+            SUCCESS_ROTATE_IMAGES: '{count} images pivotées',
+            SUCCESS_FLIP_IMAGES: '{count} images retournées',
+            SUCCESS_RESET_IMAGES: '{count} images réinitialisées',
+            SUCCESS_CONVERT_IMAGES: '{count} images converties au format {format}',
+            SUCCESS_ADD_WATERMARK: 'Filigrane ajouté à {count} images',
+            SUCCESS_DOWNLOAD_IMAGES: '{count} images téléchargées',
+            IMAGE_COUNT: '{count} images',
+            SELECTED_COUNT: '{selected}/{total} images sélectionnées',
+            PROCESSING: 'Traitement...',
+            PROCESSING_GENERIC: 'Traitement...',
+            PROGRESS_PERCENT: 'Progression : {percent}%'
+        };
+
+        // Modèles HTML français
+        window.HTML_TEMPLATES = {
+            MODAL: `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>{title}</h3>
+                        {closeButton}
+                    </div>
+                    <div class="modal-body">
+                        {content}
+                    </div>
+                </div>
+            `,
+            MODAL_CLOSE_BUTTON: '<button class="modal-close">&times;</button>',
+            IMAGE_GRID_ITEM: `
+                <div class="image-header">
+                    <input type="checkbox" class="image-checkbox" {checked}>
+                    <button class="image-delete" title="{deleteTitle}">×</button>
+                </div>
+                <img class="image-preview" src="{thumbnailUrl}" alt="{name}" loading="lazy">
+                <div class="image-info">
+                    <h4 title="{name}">{truncatedName}</h4>
+                    <p>Taille : {width} × {height}</p>
+                    <p>Taille du fichier : {size}</p>
+                    <p>Format : {format}</p>
+                </div>
+            `,
+            TOOLBAR: `
+                <div class="toolbar-left">
+                    <button class="btn btn-secondary" id="selectAllBtn">Tout sélectionner</button>
+                    <button class="btn btn-danger" id="deleteBtn" disabled>Supprimer</button>
+                    <span class="separator">|</span>
+                    <button class="btn btn-secondary" id="rotateLeftBtn" disabled>↶ Rotation gauche</button>
+                    <button class="btn btn-secondary" id="rotateRightBtn" disabled>↷ Rotation droite</button>
+                    <button class="btn btn-secondary" id="flipHBtn" disabled>⇄ Retournement horizontal</button>
+                    <button class="btn btn-secondary" id="flipVBtn" disabled>⇅ Retournement vertical</button>
+                    <button class="btn btn-secondary" id="resetBtn" disabled>↺ Réinitialiser</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-success" id="downloadBtn" disabled>📥 Télécharger</button>
+                </div>
+            `,
+            PROGRESS_OVERLAY: `
+                <div class="progress-modal">
+                    <h3>{processingTitle}</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">{processingText}</p>
+                </div>
+            `,
+            NOTIFICATION_STYLE: `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: {backgroundColor};
+                color: white;
+                padding: 12px 16px;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                max-width: 300px;
+                word-wrap: break-word;
+                animation: slideInRight 0.3s ease;
+            `
+        };
+
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Enregistrement SW réussi:', registration);
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdatePrompt();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Échec de l\'enregistrement SW:', error);
+                    });
+            });
+        }
+
+        // Invite d'installation PWA
+        let deferredPrompt;
+        let installPromptShown = localStorage.getItem('installPromptShown') === 'true';
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            if (!installPromptShown) {
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 3000);
+            }
+        });
+
+        function showInstallPrompt() {
+            const installPrompt = document.getElementById('installPrompt');
+            if (installPrompt) {
+                installPrompt.style.display = 'flex';
+            }
+        }
+
+        function showUpdatePrompt() {
+            const updatePrompt = document.getElementById('updatePrompt');
+            if (updatePrompt) {
+                updatePrompt.style.display = 'flex';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.getElementById('installBtn');
+            const dismissBtn = document.getElementById('dismissBtn');
+            const installPrompt = document.getElementById('installPrompt');
+
+            if (installBtn) {
+                installBtn.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('L\'utilisateur a accepté l\'installation');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            if (dismissBtn) {
+                dismissBtn.addEventListener('click', () => {
+                    installPrompt.style.display = 'none';
+                    localStorage.setItem('installPromptShown', 'true');
+                });
+            }
+
+            const updateBtn = document.getElementById('updateBtn');
+            const laterBtn = document.getElementById('laterBtn');
+            const updatePrompt = document.getElementById('updatePrompt');
+
+            if (updateBtn) {
+                updateBtn.addEventListener('click', () => {
+                    if (navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                    window.location.reload();
+                });
+            }
+
+            if (laterBtn) {
+                laterBtn.addEventListener('click', () => {
+                    updatePrompt.style.display = 'none';
+                });
+            }
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('Installation PWA réussie');
+        });
+    </script>
+
+    <!-- Charger les scripts du projet -->
+    <script src="scripts/image-processor.js"></script>
+    <script src="scripts/file-handler.js"></script>
+    <script src="scripts/ui-components.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
